@@ -9,11 +9,11 @@ import pkg.custom_video_surface 1.0
 ApplicationWindow {
     id:mainWindow
     visible: true
-    width: 400
-    height: 300
-    title: "Floating Subcontrol Example"
-    color: "#185abd"
-    flags: Qt.FramelessWindowHint
+    width: 1280
+    height: 720
+    title: "气体泄漏检测系统"
+    color: "#2c2a38"
+    // flags: Qt.FramelessWindowHint
 
     //QML中的方法可以被cpp调用，也可以作为槽函数
     function qml_method(val_arg){
@@ -26,200 +26,180 @@ ApplicationWindow {
         dialog.exec();
     }
     background: Rectangle {
-        //        Producers{
-        //            id: producer
-        //            //            videoSink:video_output.videoSink
-        //        }
-        //        CustomVideoSurface{
 
-        //        }
-        VideoOutput {
-            id: video_output
-            anchors.fill: parent
-            source: _provider
-        }
-        Timer{
-            id: myTimer
-            interval: 80 // 每隔一秒触发一次定时器
-            running: true   // 启动定时器
-            repeat: true    // 重复执行
-
-            onTriggered: {
-                _provider.test();
-            }
-        }
-        //        MouseArea {
-        //            anchors.fill: parent
-        //            onClicked: {
-        // 在点击时创建并显示新窗口
-
-        //                var component = Qt.createComponent("ls_mode_dlg.qml");
-        //                var dialog = component.createObject(mainWindow);
-        //                dialog.open();
-        //            }
-        //        }
-        //        Component.onCompleted: {
-        //            producer.setVideoSink(video_output.videoSink)
-        //            producer.start()
-        //        }
+        // VideoOutput {
+        //     id: video_output
+        //     anchors.fill: parent
+        //     source: _provider
+        // }
+        // Timer{
+        //     id: myTimer
+        //     interval: 580 // 每隔一秒触发一次定时器
+        //     running: true   // 启动定时器
+        //     repeat: true    // 重复执行
+        //
+        //     onTriggered: {
+        //         _provider.test();
+        //     }
+        // }
     }
     Frame {
-        id: floating_subcontrol_left
+        id: main_table_btn
         visible: true
-        width: 65
-        height: parent.height
+        width: parent.width
+        height: 35
         background: Rectangle{
-            color: "#010101"
+            color: "#42424e"
             //            border.color: "#21be2b"
         }
-        ColumnLayout{
-            anchors.horizontalCenter: parent.horizontalCenter
-            Button {
-                //                Layout.fillWidth: true
-                Layout.preferredWidth: 34
-                Layout.preferredHeight: 34
-                id:mybutton
-
-                onClicked: {
-                    qml_method(123);
-                }
-                Image {
-                    anchors.fill: parent  // 图片充满整个 Rectangle 区域
-                    source: "./images/back.png"  // 图片路径，这里使用资源路径，也可以使用绝对或相对路径
-                }
-            }
-            Button {
-                //                Layout.fillWidth: true
-                Layout.preferredWidth: 34
-                Layout.preferredHeight: 34
-                onClicked: {
-                    var component = Qt.createComponent("iso_dlg.qml");
-                    var dialog = component.createObject(mainWindow);
-                    dialog.open();
-                }
-                Rectangle {
-                    implicitHeight:parent.height
-                    implicitWidth:parent.height
-                    color: "transparent"  // 将 Rectangle 颜色设置为透明，使得背景图片显示
-                    Image {
-                        anchors.fill: parent  // 图片充满整个 Rectangle 区域
-                        source: "./images/iso.png"  // 图片路径，这里使用资源路径，也可以使用绝对或相对路径
-                    }
-                }
-            }
-            Button {
-                id:ls
-                //                Layout.fillWidth: true
-                Layout.preferredWidth: 34
-                Layout.preferredHeight: 34
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        // 在点击时创建并显示新窗口
-                        var component = Qt.createComponent("ls_mode_dlg.qml");
-                        var dialog = component.createObject(mainWindow);
-                        dialog.open();
-                    }
-                }
-                Rectangle {
-                    implicitHeight:parent.height
-                    implicitWidth:parent.height
-                    color: "transparent"  // 将 Rectangle 颜色设置为透明，使得背景图片显示
-                    Image {
-                        anchors.fill: parent  // 图片充满整个 Rectangle 区域
-                        source: "./images/ls.png"  // 图片路径，这里使用资源路径，也可以使用绝对或相对路径
-                    }
-                }
-            }
-            Button {
-                Layout.preferredWidth: 34
-                Layout.preferredHeight: 34
-                onClicked: {
-                    // 在点击时创建并显示新窗口
-                    var component = Qt.createComponent("ls_dlg.qml");
-                    var dialog = component.createObject(mainWindow);
-                    dialog.open();
-                }
-                Rectangle {
-                    implicitHeight:parent.height
-                    implicitWidth:parent.height
-                    color: "transparent"  // 将 Rectangle 颜色设置为透明，使得背景图片显示
-                    Image {
-                        anchors.fill: parent  // 图片充满整个 Rectangle 区域
-                        source: "./images/color.png"  // 图片路径，这里使用资源路径，也可以使用绝对或相对路径
-                    }
-                }
-            }
-            Button {
-                Layout.preferredWidth: 34
-                Layout.preferredHeight: 34
-                onClicked: {
-                    var component = Qt.createComponent("param_dlg.qml");
-                    var dialog = component.createObject(mainWindow);
-                    dialog.open();
-                }
-                Rectangle {
-                    implicitHeight:parent.height
-                    implicitWidth:parent.height
-                    color: "transparent"  // 将 Rectangle 颜色设置为透明，使得背景图片显示
-                    Image {
-                        anchors.fill: parent  // 图片充满整个 Rectangle 区域
-                        source: "./images/param.png"  // 图片路径，这里使用资源路径，也可以使用绝对或相对路径
-                    }
-                }
-            }
-            Button {
-                Layout.preferredWidth: 34
-                Layout.preferredHeight: 34
-                onClicked: {
-                    var component = Qt.createComponent("param_dlg.qml");
-                    var dialog = component.createObject(mainWindow);
-                    dialog.open();
-                }
-                Rectangle {
-                    implicitHeight:parent.height
-                    implicitWidth:parent.height
-                    color: "transparent"  // 将 Rectangle 颜色设置为透明，使得背景图片显示
-                    Image {
-                        anchors.fill: parent  // 图片充满整个 Rectangle 区域
-                        source: "./images/settings.png"  // 图片路径，这里使用资源路径，也可以使用绝对或相对路径
-                    }
-                }
-            }
-            ColumnLayout{
-                Timer {
-                    id: timer
-                    interval: 1000  // 更新间隔为 1000 毫秒 (1 秒)
-                    running: true
-                    repeat: true
-                    onTriggered: updateTime()
-
-                    function padZero(value) {
-                        return (value < 10) ? "0" + value : value;
-                    }
-                    function updateTime() {
-                        var currentDate = new Date();
-                        var hours = currentDate.getHours();
-                        var minutes = currentDate.getMinutes();
-                        var seconds = currentDate.getSeconds();
-
-                        var formattedTime = padZero(hours) + ":" + padZero(minutes) + ":" + padZero(seconds);
-                        timeLabel.text = formattedTime;
-                        // 通过Qt调用UI线程更新Text元素的文本
-                        //                        Qt.callLater(function() {
-                        //                            timeLabel.text = + formattedTime;
-                        //                        });
-                    }
-                }
-
-                Text{
-                    id:timeLabel
-                    text: ""
-                    font.pixelSize: 8
-                    color: "#ffffff"
-                }
-            }
-        }
+        // RowLayout{
+        //     anchors.horizontalCenter: parent.horizontalCenter
+        //     Button {
+        //         //                Layout.fillWidth: true
+        //         Layout.preferredWidth: 34
+        //         Layout.preferredHeight: 34
+        //         id:mybutton
+        //
+        //         onClicked: {
+        //             qml_method(123);
+        //         }
+        //         Image {
+        //             anchors.fill: parent  // 图片充满整个 Rectangle 区域
+        //             source: "./images/back.png"  // 图片路径，这里使用资源路径，也可以使用绝对或相对路径
+        //         }
+        //     }
+        //     Button {
+        //         //                Layout.fillWidth: true
+        //         Layout.preferredWidth: 34
+        //         Layout.preferredHeight: 34
+        //         onClicked: {
+        //             var component = Qt.createComponent("iso_dlg.qml");
+        //             var dialog = component.createObject(mainWindow);
+        //             dialog.open();
+        //         }
+        //         Rectangle {
+        //             implicitHeight:parent.height
+        //             implicitWidth:parent.height
+        //             color: "transparent"  // 将 Rectangle 颜色设置为透明，使得背景图片显示
+        //             Image {
+        //                 anchors.fill: parent  // 图片充满整个 Rectangle 区域
+        //                 source: "./images/iso.png"  // 图片路径，这里使用资源路径，也可以使用绝对或相对路径
+        //             }
+        //         }
+        //     }
+        //     Button {
+        //         id:ls
+        //         //                Layout.fillWidth: true
+        //         Layout.preferredWidth: 34
+        //         Layout.preferredHeight: 34
+        //         MouseArea {
+        //             anchors.fill: parent
+        //             onClicked: {
+        //                 // 在点击时创建并显示新窗口
+        //                 var component = Qt.createComponent("ls_mode_dlg.qml");
+        //                 var dialog = component.createObject(mainWindow);
+        //                 dialog.open();
+        //             }
+        //         }
+        //         Rectangle {
+        //             implicitHeight:parent.height
+        //             implicitWidth:parent.height
+        //             color: "transparent"  // 将 Rectangle 颜色设置为透明，使得背景图片显示
+        //             Image {
+        //                 anchors.fill: parent  // 图片充满整个 Rectangle 区域
+        //                 source: "./images/ls.png"  // 图片路径，这里使用资源路径，也可以使用绝对或相对路径
+        //             }
+        //         }
+        //     }
+        //     Button {
+        //         Layout.preferredWidth: 34
+        //         Layout.preferredHeight: 34
+        //         onClicked: {
+        //             // 在点击时创建并显示新窗口
+        //             var component = Qt.createComponent("ls_dlg.qml");
+        //             var dialog = component.createObject(mainWindow);
+        //             dialog.open();
+        //         }
+        //         Rectangle {
+        //             implicitHeight:parent.height
+        //             implicitWidth:parent.height
+        //             color: "transparent"  // 将 Rectangle 颜色设置为透明，使得背景图片显示
+        //             Image {
+        //                 anchors.fill: parent  // 图片充满整个 Rectangle 区域
+        //                 source: "./images/color.png"  // 图片路径，这里使用资源路径，也可以使用绝对或相对路径
+        //             }
+        //         }
+        //     }
+        //     Button {
+        //         Layout.preferredWidth: 34
+        //         Layout.preferredHeight: 34
+        //         onClicked: {
+        //             var component = Qt.createComponent("param_dlg.qml");
+        //             var dialog = component.createObject(mainWindow);
+        //             dialog.open();
+        //         }
+        //         Rectangle {
+        //             implicitHeight:parent.height
+        //             implicitWidth:parent.height
+        //             color: "transparent"  // 将 Rectangle 颜色设置为透明，使得背景图片显示
+        //             Image {
+        //                 anchors.fill: parent  // 图片充满整个 Rectangle 区域
+        //                 source: "./images/param.png"  // 图片路径，这里使用资源路径，也可以使用绝对或相对路径
+        //             }
+        //         }
+        //     }
+        //     Button {
+        //         Layout.preferredWidth: 34
+        //         Layout.preferredHeight: 34
+        //         onClicked: {
+        //             var component = Qt.createComponent("param_dlg.qml");
+        //             var dialog = component.createObject(mainWindow);
+        //             dialog.open();
+        //         }
+        //         Rectangle {
+        //             implicitHeight:parent.height
+        //             implicitWidth:parent.height
+        //             color: "transparent"  // 将 Rectangle 颜色设置为透明，使得背景图片显示
+        //             Image {
+        //                 anchors.fill: parent  // 图片充满整个 Rectangle 区域
+        //                 source: "./images/settings.png"  // 图片路径，这里使用资源路径，也可以使用绝对或相对路径
+        //             }
+        //         }
+        //     }
+        //     ColumnLayout{
+        //         Timer {
+        //             id: timer
+        //             interval: 1000  // 更新间隔为 1000 毫秒 (1 秒)
+        //             running: true
+        //             repeat: true
+        //             onTriggered: updateTime()
+        //
+        //             function padZero(value) {
+        //                 return (value < 10) ? "0" + value : value;
+        //             }
+        //             function updateTime() {
+        //                 var currentDate = new Date();
+        //                 var hours = currentDate.getHours();
+        //                 var minutes = currentDate.getMinutes();
+        //                 var seconds = currentDate.getSeconds();
+        //
+        //                 var formattedTime = padZero(hours) + ":" + padZero(minutes) + ":" + padZero(seconds);
+        //                 timeLabel.text = formattedTime;
+        //                 // 通过Qt调用UI线程更新Text元素的文本
+        //                 //                        Qt.callLater(function() {
+        //                 //                            timeLabel.text = + formattedTime;
+        //                 //                        });
+        //             }
+        //         }
+        //
+        //         Text{
+        //             id:timeLabel
+        //             text: ""
+        //             font.pixelSize: 8
+        //             color: "#ffffff"
+        //         }
+        //     }
+        // }
     }
     Pane {
         id: floating_subcontrol_mid
@@ -231,7 +211,6 @@ ApplicationWindow {
 
         background: Rectangle{
             color: "transparent"
-            //            border.color: "#21be2b"
         }
         RowLayout{
             id:grid_right
@@ -291,135 +270,181 @@ ApplicationWindow {
                 }
                 text: "激光"
             }
-            //            Button {
-            //                Layout.fillWidth: true
-            //                Layout.preferredWidth: 44
-            //                Layout.preferredHeight: 44
-            //                onClicked: {
-            //                    qml_method(123);
-            //                }
-            //                Rectangle {
-            //                    implicitHeight:parent.height
-            //                    implicitWidth:parent.height
-            //                    color: "transparent"  // 将 Rectangle 颜色设置为透明，使得背景图片显示
-            //                    Image {
-            //                        anchors.fill: parent  // 图片充满整个 Rectangle 区域
-            //                        source: "./images/take_shot.png"  // 图片路径，这里使用资源路径，也可以使用绝对或相对路径
-            //                    }
-            //                }
-            //            }
-            //            Button {
-            //                Layout.fillWidth: true
-            //                Layout.preferredWidth: 44
-            //                Layout.preferredHeight: 44
-            //                onClicked: {
-            //                    qml_method(123);
-            //                }
-            //                Rectangle {
-            //                    implicitHeight:parent.height
-            //                    implicitWidth:parent.height
-            //                    color: "transparent"  // 将 Rectangle 颜色设置为透明，使得背景图片显示
-            //                    Image {
-            //                        anchors.fill: parent  // 图片充满整个 Rectangle 区域
-            //                        source: "./images/record.png"  // 图片路径，这里使用资源路径，也可以使用绝对或相对路径
-            //                    }
-            //                }
-            //            }
-            //            Button {
-            //                Layout.fillWidth: true
-            //                Layout.preferredWidth: 44
-            //                Layout.preferredHeight: 44
-            //                onClicked: {
-            //                    qml_method(123);
-            //                }
-            //                Rectangle {
-            //                    implicitHeight:parent.height
-            //                    implicitWidth:parent.height
-            //                    color: "transparent"  // 将 Rectangle 颜色设置为透明，使得背景图片显示
-            //                    Image {
-            //                        anchors.fill: parent  // 图片充满整个 Rectangle 区域
-            //                        source: "./images/playback.png"  // 图片路径，这里使用资源路径，也可以使用绝对或相对路径
-            //                    }
-            //                }
-            //            }
         }
     }
     Pane {
-        id: floating_subcontrol_right
+        id: main_status_bottom
         visible: true
-        width: 65
-        height: parent.height
-        anchors.right: parent.right
-        background: Rectangle{
-            color: "#20232c"
-            //            border.color: "#21be2b"
-        }
-        ColumnLayout{
-            id:grid_pane_right
+        width: parent.width
+        height: 28
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        leftPadding: 0 // 左内边距
+        rightPadding: 0 // 右内边距
+        topPadding: 0 // 上内边距
+        bottomPadding: 0 // 下内边距
+
+        RowLayout{
+            Rectangle {
+                width: parent.width
+                height: parent.height
+                color: "#2c2a38" // 设置背景色
+            }
+            id:row_layout_status_bottom
             Layout.fillWidth: true
             Layout.fillHeight: true
             anchors.fill: parent
-            //            anchors.horizontalCenter: parent.horizontalCenter
-            Button {
-                Layout.fillWidth: true
-                Layout.preferredWidth: 47
-                Layout.preferredHeight: 47
-                onClicked: {
-                    qml_method(123);
-                }
-                text: "模式切换"
+            // spacing: 10
+            Image {
+                Layout.fillHeight: true
+                Layout.preferredWidth: 23
+                Layout.preferredHeight: 23
+                // Image {
+                //     // anchors.fill: parent  // 图片充满整个 Rectangle 区域
+                //     source: "./images/take_shot.png"  // 图片路径，这里使用资源路径，也可以使用绝对或相对路径
+                // }
             }
-            Button {
-                Layout.fillWidth: true
-                Layout.preferredWidth: 47
-                Layout.preferredHeight: 47
-                onClicked: {
-                    qml_method(123);
+            Item { // 占位符
+                width: 10
+            }
+            Text {
+                // Layout.preferredWidth: 23
+                // Layout.preferredHeight: 23
+                text: "西南服务器:"
+                color: "white"
+                font.pixelSize: 12
+                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+            }
+            Text {
+                Layout.preferredWidth: 23
+                Layout.preferredHeight: 23
+                text: "已连接"
+                color: "white"
+                font.pixelSize: 12
+                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+            }
+            // Item { // 占位符
+            //     Layout.fillWidth: true
+            // }
+            Text {
+                Layout.preferredWidth: 23
+                Layout.preferredHeight: 23
+                color: "white"
+                text: "处理器:"
+                font.pixelSize: 12
+                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+            }
+            ProgressBar {
+                value: 50
+                padding: 1
+                background: Rectangle {
+                    implicitWidth: 100
+                    implicitHeight: 14
+                    color: "#e6e6e6"
+                    radius: 5
                 }
-                Rectangle {
-                    implicitHeight:parent.height
-                    implicitWidth:parent.height
-                    color: "transparent"  // 将 Rectangle 颜色设置为透明，使得背景图片显示
-                    Image {
-                        anchors.fill: parent  // 图片充满整个 Rectangle 区域
-                        source: "./images/take_shot.png"  // 图片路径，这里使用资源路径，也可以使用绝对或相对路径
+                contentItem: Item {
+                    implicitWidth: 100
+                    implicitHeight: 12
+
+                    Rectangle {
+                        width: 50
+                        height: parent.height
+                        radius: 4
+                        color: "#17a81a"
                     }
                 }
             }
-            Button {
-                Layout.fillWidth: true
-                Layout.preferredWidth: 47
-                Layout.preferredHeight: 47
-                onClicked: {
-                    qml_method(123);
+            Text {
+
+                Layout.preferredWidth: 40
+                Layout.preferredHeight: 23
+                color: "white"
+                text: "内存:"
+                font.pixelSize: 12
+                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+            }
+            ProgressBar {
+                value: 50
+                padding: 1
+                background: Rectangle {
+                    implicitWidth: 100
+                    implicitHeight: 14
+                    color: "#e6e6e6"
+                    radius: 5
                 }
-                Rectangle {
-                    implicitHeight:parent.height
-                    implicitWidth:parent.height
-                    color: "transparent"  // 将 Rectangle 颜色设置为透明，使得背景图片显示
-                    Image {
-                        anchors.fill: parent  // 图片充满整个 Rectangle 区域
-                        source: "./images/record.png"  // 图片路径，这里使用资源路径，也可以使用绝对或相对路径
+                contentItem: Item {
+                    implicitWidth: 100
+                    implicitHeight: 12
+
+                    Rectangle {
+                        width: 50
+                        height: parent.height
+                        radius: 4
+                        color: "#17a81a"
                     }
                 }
             }
-            Button {
-                Layout.fillWidth: true
-                Layout.preferredWidth: 47
-                Layout.preferredHeight: 47
-                onClicked: {
-                    qml_method(123);
+            Text {
+                width: 40
+                Layout.preferredHeight: 23
+                color: "white"
+                text: "硬盘:"
+                font.pixelSize: 12
+                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+            }
+            ProgressBar {
+                value: 50
+                padding: 1
+                background: Rectangle {
+                    implicitWidth: 100
+                    implicitHeight: 14
+                    color: "#e6e6e6"
+                    radius: 5
                 }
-                Rectangle {
-                    implicitHeight:parent.height
-                    implicitWidth:parent.height
-                    color: "transparent"  // 将 Rectangle 颜色设置为透明，使得背景图片显示
-                    Image {
-                        anchors.fill: parent  // 图片充满整个 Rectangle 区域
-                        source: "./images/playback.png"  // 图片路径，这里使用资源路径，也可以使用绝对或相对路径
+                contentItem: Item {
+                    implicitWidth: 100
+                    implicitHeight: 12
+
+                    Rectangle {
+                        width: 50
+                        height: parent.height
+                        radius: 4
+                        color: "#17a81a"
                     }
                 }
             }
+            Text {
+
+                width: 40
+                Layout.preferredHeight: 23
+                color: "white"
+                text: "网络:"
+                font.pixelSize: 12
+                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+            }
+            ProgressBar {
+                value: 50
+                padding: 1
+                background: Rectangle {
+                    implicitWidth: 100
+                    implicitHeight: 14
+                    color: "#e6e6e6"
+                    radius: 5
+                }
+                contentItem: Item {
+                    implicitWidth: 100
+                    implicitHeight: 12
+
+                    Rectangle {
+                        width: 50
+                        height: parent.height
+                        radius: 4
+                        color: "#17a81a"
+                    }
+                }
+            }
+
         }
     }
 }

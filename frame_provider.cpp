@@ -57,7 +57,8 @@ void FrameProvider::test()
 {
     int plane = 0;
     QImage image(640, 480, QImage::Format_ARGB32);
-    image.fill(QColor::fromRgb(QRandomGenerator::global()->generate()));
+//    image.fill(QColor::fromRgb(QRandomGenerator::global()->generate()));
+    image.fill(Qt::GlobalColor::lightGray);
     QFont font;
     font.setPointSize(25);
 

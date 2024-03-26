@@ -18,12 +18,12 @@ int main(int argc, char *argv[])
     FrameProvider provider;
 //    ctx->setContextProperty("Config", config);
 
-    ctx->setContextProperty("_provider", &provider);
 
     qmlRegisterType<Producer>("pkg.producer", 1, 0, "Producers");
     qmlRegisterType<Producer>("pkg.custom_video_surface", 1, 0, "CustomVideoSurface");
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
+    ctx->setContextProperty("_provider", &provider);
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
         if (!obj && url == objUrl)
