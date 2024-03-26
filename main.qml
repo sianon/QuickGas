@@ -272,11 +272,12 @@ ApplicationWindow {
             }
         }
     }
+    //bottom status
     Pane {
         id: main_status_bottom
         visible: true
         width: parent.width
-        height: 28
+        height: 26
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         leftPadding: 0 // 左内边距
@@ -285,57 +286,52 @@ ApplicationWindow {
         bottomPadding: 0 // 下内边距
 
         RowLayout{
-            Rectangle {
-                width: parent.width
-                height: parent.height
-                color: "#2c2a38" // 设置背景色
-            }
             id:row_layout_status_bottom
             Layout.fillWidth: true
             Layout.fillHeight: true
             anchors.fill: parent
-            // spacing: 10
-            Image {
-                Layout.fillHeight: true
-                Layout.preferredWidth: 23
-                Layout.preferredHeight: 23
-                // Image {
-                //     // anchors.fill: parent  // 图片充满整个 Rectangle 区域
-                //     source: "./images/take_shot.png"  // 图片路径，这里使用资源路径，也可以使用绝对或相对路径
-                // }
+            Layout.alignment: Qt.AlignVCenter
+            Rectangle {
+                width: parent.width
+                height: parent.height
+                color: "#2c2a38"
             }
-            Item { // 占位符
-                width: 10
+            Item {
+                Layout.minimumWidth: 20 // 自定义间距
+            }
+            Item {
+                anchors.verticalCenter: parent.verticalCenter
+                Rectangle {
+                    width: 15
+                    height: 15
+                    color: "red"
+                    radius: width / 2
+                    anchors.verticalCenter: parent.verticalCenter
+                }
             }
             Text {
-                // Layout.preferredWidth: 23
-                // Layout.preferredHeight: 23
                 text: "西南服务器:"
                 color: "white"
                 font.pixelSize: 12
                 Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
             }
             Text {
-                Layout.preferredWidth: 23
-                Layout.preferredHeight: 23
                 text: "已连接"
                 color: "white"
                 font.pixelSize: 12
                 Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
             }
-            // Item { // 占位符
-            //     Layout.fillWidth: true
-            // }
+            Item {
+                Layout.fillWidth: true // 自定义间距
+            }
             Text {
-                Layout.preferredWidth: 23
-                Layout.preferredHeight: 23
                 color: "white"
                 text: "处理器:"
                 font.pixelSize: 12
                 Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
             }
             ProgressBar {
-                value: 50
+                value: 70
                 padding: 1
                 background: Rectangle {
                     implicitWidth: 100
@@ -351,14 +347,11 @@ ApplicationWindow {
                         width: 50
                         height: parent.height
                         radius: 4
-                        color: "#17a81a"
+                        color: "#c96600"
                     }
                 }
             }
             Text {
-
-                Layout.preferredWidth: 40
-                Layout.preferredHeight: 23
                 color: "white"
                 text: "内存:"
                 font.pixelSize: 12
@@ -378,7 +371,7 @@ ApplicationWindow {
                     implicitHeight: 12
 
                     Rectangle {
-                        width: 50
+                        width: 80
                         height: parent.height
                         radius: 4
                         color: "#17a81a"
@@ -387,14 +380,13 @@ ApplicationWindow {
             }
             Text {
                 width: 40
-                Layout.preferredHeight: 23
                 color: "white"
                 text: "硬盘:"
                 font.pixelSize: 12
                 Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
             }
             ProgressBar {
-                value: 50
+                value: 20
                 padding: 1
                 background: Rectangle {
                     implicitWidth: 100
@@ -415,16 +407,13 @@ ApplicationWindow {
                 }
             }
             Text {
-
-                width: 40
-                Layout.preferredHeight: 23
                 color: "white"
                 text: "网络:"
                 font.pixelSize: 12
                 Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
             }
             ProgressBar {
-                value: 50
+                value: 80
                 padding: 1
                 background: Rectangle {
                     implicitWidth: 100
@@ -437,7 +426,7 @@ ApplicationWindow {
                     implicitHeight: 12
 
                     Rectangle {
-                        width: 50
+                        width: 90
                         height: parent.height
                         radius: 4
                         color: "#17a81a"
