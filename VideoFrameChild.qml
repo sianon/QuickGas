@@ -3,19 +3,20 @@ import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
-Window{
+Item{
     id: dialog
-    width: 320
-    height: 240
+    width: parent.width
+    height: parent.height
+
     ColumnLayout {
         anchors.fill: parent
-        anchors.margins: 10
+        anchors.margins: 1
         Rectangle{
             anchors.fill: parent
-            color: "#2e2f30"
+            color: "#ffffffff"
             radius: 5
-            border.color: "pink"
-
+            // border.color: "pink"
+            border.width: 1
             Rectangle {
                 id: top_status
                 anchors.left: parent.left
@@ -28,7 +29,6 @@ Window{
                 RowLayout {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
-
                     Label{
                         font.pixelSize: 16
                         rightPadding: 6
@@ -37,6 +37,7 @@ Window{
                     }
                 }
             }
+            //video frame
             Rectangle {
                 id: video_frame
                 anchors.left: parent.left
@@ -64,12 +65,13 @@ Window{
                 width: parent.width
                 color: "#42424e"
 
-                radius: 5
+                // radius: 15
                 RowLayout {
                     height: parent.height
                     width: parent.width
                     anchors.leftMargin: 5
                     anchors.rightMargin: 5
+
                     anchors.fill: bottom_btn
                     anchors.verticalCenter: parent.verticalCenter
 
