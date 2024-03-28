@@ -17,5 +17,6 @@
         <file>ls_mode_dlg.qml</file>
         <file>iso_dlg.qml</file>
         <file>param_dlg.qml</file>
+        <file>video_frame_child.qml</file>
     </qresource>
 </RCC>
