@@ -174,13 +174,14 @@ ApplicationWindow {
                                     anchors.fill: parent
                                     anchors.left: parent.left
                                     anchors.top: parent.top
+                                    // width: 300
                                     Rectangle {
                                         id: left_column_top
                                         anchors.left: parent.left
                                         anchors.top: parent.top
                                         anchors.bottom: left_column_bottom.top
                                         width: parent.width
-                                        // height: 400
+
                                         color: "#2c2a38"
                                         border.color: "#42424e"
                                         radius: 5
@@ -265,15 +266,17 @@ ApplicationWindow {
                                                 GridLayout {
                                                     rows: 3
                                                     columns: 3
-                                                    height: parent.height
-                                                    width: parent.width
+                                                    // anchors.left: parent.left
+                                                    // anchors.top: parent.top
                                                     anchors.fill: parent
-                                                    anchors.margins: 10
+                                                    // // anchors.margins: 10
+                                                    // anchors.verticalCenter: parent.verticalCenter
+                                                    // anchors.horizontalCenter: parent.horizontalCenter
                                                     Repeater {
                                                         model: 9 // 创建 16 个子项
                                                         Rectangle {
-                                                            width: 60
-                                                            height: 60
+                                                            Layout.preferredWidth: parent.width/3
+                                                            Layout.preferredHeight: parent.height/3
                                                             color: "#42424e"
                                                             radius: 5
                                                         }
@@ -460,16 +463,16 @@ ApplicationWindow {
                                         }
                                     }
                                 }
+
                             }
                             //preview video frame
                             Rectangle {
                                 anchors.left: left_column.right
                                 anchors.top: left_column.top
                                 height: parent.height
-                                width: parent.width
+                                width: parent.width - 306
                                 color: "#2c2a38"
-                                anchors.leftMargin: 6
-                                anchors.rightMargin: 6
+                                anchors.margins: 3
                                 // border.color: "#aaaaaf"
                                 radius: 5
                                 GridLayout {
@@ -478,12 +481,12 @@ ApplicationWindow {
                                     height: parent.height
                                     width: parent.width
                                     anchors.fill: parent
-                                    anchors.margins: 10
+                                    anchors.margins: 3
                                     Repeater {
                                         model: 16 // 创建 16 个子项
                                         Rectangle {
-                                            width: 330
-                                            height: 250
+                                            Layout.preferredWidth: parent.width/4 - 6
+                                            Layout.preferredHeight: parent.height/4 -3
                                             color: "#42424e"
                                             radius: 5
                                             VideoFrameChild{
