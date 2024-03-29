@@ -533,11 +533,21 @@ ApplicationWindow {
                         }
                     }
                     Rectangle {
-                        width: 640
-                        height: 480
-                        VideoFrameChild{
-                            //                            width: 320
-                            //                            height: 240
+                        anchors.fill: parent
+                        VideoOutput {
+                            id: video_outputs
+                            anchors.fill: parent
+                            source: _provider
+                        }
+                        Timer{
+                            id: myTimer
+                            interval: 800
+                            running: true
+                            repeat: true
+
+                            onTriggered: {
+                                _provider.test();
+                            }
                         }
                     }
                 }

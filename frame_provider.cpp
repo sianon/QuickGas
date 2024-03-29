@@ -5,10 +5,33 @@
 #include <QRandomGenerator>
 #include <QVideoFrame>
 #include <QDebug>
+#include <QVideoWidget>
+#include <QFile>
+
+#include <QVideoSurfaceFormat>
+#include <QAbstractVideoSurface>
+
 #include "video_dlg.h"
 
 FrameProvider::FrameProvider()
 {
+//    QMediaPlayer* mediaPlayer = new QMediaPlayer(this);
+//    QVideoProbe* videoProbe = new QVideoProbe(this);
+//
+//    mediaPlayer->setVideoOutput(m_surface);
+//    mediaPlayer->setMedia(QUrl::fromLocalFile("123.mp4"));
+//
+//
+//    QFile file("123.mp4");
+//    if(file.exists())
+//    {
+//        qDebug() << file.size();
+//    }
+//    qDebug() << file.size();
+//
+//    mediaPlayer->setVolume(0); // Mute the player
+//    mediaPlayer->play(); // Start playing the video
+//    auto tmp = mediaPlayer->state();
 
 }
 
@@ -56,8 +79,8 @@ void FrameProvider::setFormat(int width, int heigth, QVideoFrame::PixelFormat fo
 void FrameProvider::test()
 {
     int plane = 0;
-    QImage image(640, 480, QImage::Format_ARGB32);
-//    image.fill(QColor::fromRgb(QRandomGenerator::global()->generate()));
+    QImage image(1280, 720, QImage::Format_ARGB32);
+    image.fill(QColor::fromRgb(QRandomGenerator::global()->generate()));
     image.fill(Qt::GlobalColor::lightGray);
     QFont font;
     font.setPointSize(25);

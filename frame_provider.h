@@ -4,7 +4,10 @@
 #include <QObject>
 #include <QAbstractVideoSurface>
 #include <QVideoSurfaceFormat>
-
+#include <QMediaPlayer>
+#include <QVideoProbe>
+#include <QTimer>
+#include "custom_video_surface.h"
 /*!
  * \brief FrameProvider 作为qml VideoOutput.source
  */
@@ -20,18 +23,8 @@ public:
 
     QAbstractVideoSurface *videoSurface() const;
 
-    /*!
-     * \brief 可设置外部自定义QAbstractVideoSurface
-     * \param surface
-     */
     void setVideoSurface(QAbstractVideoSurface *surface);
 
-    /*!
-     * \brief 设置视频格式
-     * \param width     视频宽
-     * \param heigth    视频高
-     * \param format    enum QVideoFrame::PixelFormat
-     */
     void setFormat(int width, int heigth, QVideoFrame::PixelFormat format);
     Q_INVOKABLE void test();
 public slots:
@@ -44,5 +37,6 @@ public slots:
 private:
     QAbstractVideoSurface *m_surface = NULL;
     QVideoSurfaceFormat m_format;
+    QTimer timer;
 };
 #endif // FRAMEPRODER_H
