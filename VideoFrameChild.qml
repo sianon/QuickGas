@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import QtMultimedia 5.15
 
 Item{
     id: dialog
@@ -45,7 +46,21 @@ Item{
 
                 height: parent.height - top_status.height - bottom_btn.height
                 width: parent.width
+                VideoOutput {
+                    id: video_outputs
+                    anchors.fill: parent
+                    source: _provider
+                }
+                Timer{
+                    id: myTimer
+                    interval: 1000/25
+                    running: true
+                    repeat: true
 
+                    onTriggered: {
+                        _provider.test();
+                    }
+                }
                 color: "#2c2a38"
                 Text {
                     anchors.verticalCenter: parent.verticalCenter

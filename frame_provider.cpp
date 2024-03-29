@@ -15,11 +15,12 @@
 
 FrameProvider::FrameProvider()
 {
-//    QMediaPlayer* mediaPlayer = new QMediaPlayer(this);
+    QMediaPlayer* mediaPlayer = new QMediaPlayer(this);
 //    QVideoProbe* videoProbe = new QVideoProbe(this);
 //
-//    mediaPlayer->setVideoOutput(m_surface);
-//    mediaPlayer->setMedia(QUrl::fromLocalFile("123.mp4"));
+    m_customSurface = new CustomVideoSurface(this);
+    mediaPlayer->setVideoOutput(m_customSurface);
+    mediaPlayer->setMedia(QUrl::fromLocalFile("123.mp4"));
 //
 //
 //    QFile file("123.mp4");
@@ -30,8 +31,8 @@ FrameProvider::FrameProvider()
 //    qDebug() << file.size();
 //
 //    mediaPlayer->setVolume(0); // Mute the player
-//    mediaPlayer->play(); // Start playing the video
-//    auto tmp = mediaPlayer->state();
+    mediaPlayer->play(); // Start playing the video
+    auto tmp = mediaPlayer->state();
 
 }
 
@@ -78,10 +79,10 @@ void FrameProvider::setFormat(int width, int heigth, QVideoFrame::PixelFormat fo
 
 void FrameProvider::test()
 {
-    int plane = 0;
-    QImage image(1280, 720, QImage::Format_ARGB32);
-    image.fill(QColor::fromRgb(QRandomGenerator::global()->generate()));
-    image.fill(Qt::GlobalColor::lightGray);
+//    QImage image(1280, 720, QImage::Format_ARGB32);
+    QImage image = m_customSurface->currentImage();
+//    image.fill(QColor::fromRgb(QRandomGenerator::global()->generate()));
+//    image.fill(Qt::GlobalColor::lightGray);
     QFont font;
     font.setPointSize(25);
 
@@ -91,17 +92,11 @@ void FrameProvider::test()
     painter.end();
 
     QVideoFrame video_frame(image);
-//    video_frame.unmap();
 
     //按照视频帧设置格式
     setFormat(video_frame.width(),video_frame.height(),video_frame.pixelFormat());
     if (m_surface)
         m_surface->present(video_frame);
-
-//    VideoDialog* dialog = new VideoDialog();
-//    dialog->show();
-//    // 在 QDialog 中显示 QVideoFrame
-//    dialog->setVideoFrame(video_frame);
 }
 
 void FrameProvider::onNewVideoContentReceived(const QVideoFrame &frame)

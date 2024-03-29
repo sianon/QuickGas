@@ -534,21 +534,7 @@ ApplicationWindow {
                     }
                     Rectangle {
                         anchors.fill: parent
-                        VideoOutput {
-                            id: video_outputs
-                            anchors.fill: parent
-                            source: _provider
-                        }
-                        Timer{
-                            id: myTimer
-                            interval: 800
-                            running: true
-                            repeat: true
 
-                            onTriggered: {
-                                _provider.test();
-                            }
-                        }
                     }
                 }
             }

@@ -36,6 +36,7 @@ public slots:
 
 private:
     QAbstractVideoSurface *m_surface = NULL;
+    CustomVideoSurface *m_customSurface = NULL;
     QVideoSurfaceFormat m_format;
     QTimer timer;
 };
