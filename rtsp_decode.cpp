@@ -34,13 +34,15 @@ GstFlowReturn CaptureGstBGRBuffer(GstAppSink* sink, gpointer user_data){
         return GST_FLOW_ERROR;
     }
 
-    cv::Mat bgra = cv::Mat(data->height(), data->width(), CV_8UC4, (char*) map_info.data, cv::Mat::AUTO_STEP);
+    cv::Mat bgra = cv::Mat(data->height(), data->width(), CV_8UC1, (char*) map_info.data, cv::Mat::AUTO_STEP);
     cv::Mat rgba;
 
     cv::cvtColor(bgra, rgba, cv::COLOR_BGR2RGBA);
 
     QImage image(rgba.data, rgba.cols, rgba.rows, rgba.step, QImage::Format_RGBA8888);
-    VideoQueue::moGetInstance()->mvPushVideo2Queue(uri, &image);
+
+//    QImage image(rgba.data, rgba.cols, rgba.rows, rgba.step, QImage::Format_RGBA8888);
+    VideoQueue::moGetInstance()->mvPushVideo2Queue(uri, image);
 
     gst_buffer_unmap((buffer), &map_info);
     gst_sample_unref(sample);
@@ -103,7 +105,7 @@ int RrspDecode::init(int width, int height, std::string url){
     }
 
     // 设置
-    g_object_set(G_OBJECT(rtspsrc_), "location", url_.c_str(), "latency", 2000, NULL);
+    g_object_set(G_OBJECT(rtspsrc_), "location", url_.c_str(), "latency", 1000, NULL);
 //    g_object_set(G_OBJECT(capsfilter_), "caps", gst_caps_new_simple("video/x-raw", "format", G_TYPE_STRING, "BGRx", "width", G_TYPE_INT, width_, "height", G_TYPE_INT, height_, nullptr), NULL);
     // Set up appsink
     g_object_set(G_OBJECT(appsink_), "emit-signals", TRUE, NULL);

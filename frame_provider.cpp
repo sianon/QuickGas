@@ -12,6 +12,7 @@
 #include <QAbstractVideoSurface>
 
 #include "video_dlg.h"
+#include "src/video_queue.h"
 
 FrameProvider::FrameProvider()
 {
@@ -71,17 +72,27 @@ void FrameProvider::setFormat(int width, int heigth, QVideoFrame::PixelFormat fo
 void FrameProvider::test()
 {
 //    QImage image(1280, 720, QImage::Format_ARGB32);
-    QImage image = m_customSurface->currentImage();
-    QFont font;
-    font.setPointSize(25);
 
-    QPainter painter(&image);
-    painter.setFont(font);
-    painter.drawText(image.rect(), Qt::AlignCenter, QDateTime::currentDateTime().toString());
-    painter.end();
+    auto urls = VideoQueue::moGetInstance()->moGetAllRtspUrl();
+    if(urls.empty()) return;
 
+    QImage image = VideoQueue::moGetInstance()->moGetVideoFromQueue(urls.front());
+
+    if(image.isNull()) return;
+
+//    QFont font;
+//    font.setPointSize(25);
+//
+//    QPainter painter(image);
+//    painter.setFont(font);
+//    painter.drawText(image->rect(), Qt::AlignCenter, QDateTime::currentDateTime().toString());
+//    painter.end();
+    auto tmp = image.rect();
+    auto tmp1 = image.size();
+    auto tmp2 = image.format();
+
+//    image.save("fuck1.jpg");
     QVideoFrame video_frame(image);
-
     //按照视频帧设置格式
     setFormat(video_frame.width(),video_frame.height(),video_frame.pixelFormat());
     if (m_surface)
