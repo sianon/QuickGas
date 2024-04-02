@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(quick_demo VERSION 0.1 LANGUAGES CXX)
+project(QuickGas VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -39,10 +39,12 @@ set(PROJECT_SOURCES
         qml.qrc
         rtsp_decode.h
         rtsp_decode.cpp
+        src/video_queue.cpp
+        src/video_queue.h
 )
 
 
-add_executable(quick_demo
+add_executable(QuickGas
         ${PROJECT_SOURCES}
         producer.h
         producer.cpp
@@ -53,14 +55,14 @@ add_executable(quick_demo
 )
 
 
-target_link_libraries(quick_demo
+target_link_libraries(QuickGas
         PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick Qt${QT_VERSION_MAJOR}::Qml Qt${QT_VERSION_MAJOR}::Widgets Qt5::Multimedia Qt5::MultimediaWidgets ${GLIB_LIBRARIES} ${GOBJECT_LIBRARIES} ${GST_LIBRARIES} ${OpenCV_LIBS} ${GSTREAMER_RTSP_SERVER_LIBRARIES})
 
 
 if(${QT_VERSION} VERSION_LESS 6.1.0)
     set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.quick_demo)
 endif()
-set_target_properties(quick_demo PROPERTIES
+set_target_properties(QuickGas PROPERTIES
         ${BUNDLE_ID_OPTION}
         MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
         MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
@@ -69,7 +71,7 @@ set_target_properties(quick_demo PROPERTIES
 )
 
 include(GNUInstallDirs)
-install(TARGETS quick_demo
+install(TARGETS QuickGas
         BUNDLE DESTINATION .
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
