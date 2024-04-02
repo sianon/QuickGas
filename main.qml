@@ -273,7 +273,7 @@ ApplicationWindow {
                                                     // anchors.verticalCenter: parent.verticalCenter
                                                     // anchors.horizontalCenter: parent.horizontalCenter
                                                     Repeater {
-                                                        model: 9 // 创建 16 个子项
+                                                        model: 9 // 创建 9 个子项
                                                         Rectangle {
                                                             Layout.preferredWidth: parent.width/3
                                                             Layout.preferredHeight: parent.height/3
@@ -482,8 +482,8 @@ ApplicationWindow {
                                     width: parent.width
                                     anchors.fill: parent
                                     anchors.margins: 3
-                                    Repeater {
-                                        model: 16 // 创建 16 个子项
+                                    // Repeater {
+                                    //     model: 16 // 创建 16 个子项
                                         Rectangle {
                                             Layout.preferredWidth: parent.width/4 - 6
                                             Layout.preferredHeight: parent.height/4 -3
@@ -495,7 +495,7 @@ ApplicationWindow {
                                             }
 
                                         }
-                                    }
+                                    // }
                                 }
                             }
 

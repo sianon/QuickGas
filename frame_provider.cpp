@@ -20,17 +20,8 @@ FrameProvider::FrameProvider()
 //
     m_customSurface = new CustomVideoSurface(this);
     mediaPlayer->setVideoOutput(m_customSurface);
-    mediaPlayer->setMedia(QUrl::fromLocalFile("123.mp4"));
-//
-//
-//    QFile file("123.mp4");
-//    if(file.exists())
-//    {
-//        qDebug() << file.size();
-//    }
-//    qDebug() << file.size();
-//
-//    mediaPlayer->setVolume(0); // Mute the player
+    mediaPlayer->setMedia(QUrl("rtsp://127.0.0.1:8554/"));
+
     mediaPlayer->play(); // Start playing the video
     auto tmp = mediaPlayer->state();
 
@@ -81,8 +72,6 @@ void FrameProvider::test()
 {
 //    QImage image(1280, 720, QImage::Format_ARGB32);
     QImage image = m_customSurface->currentImage();
-//    image.fill(QColor::fromRgb(QRandomGenerator::global()->generate()));
-//    image.fill(Qt::GlobalColor::lightGray);
     QFont font;
     font.setPointSize(25);
 
