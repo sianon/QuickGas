@@ -27,24 +27,27 @@ GstFlowReturn CaptureGstBGRBuffer(GstAppSink* sink, gpointer user_data){
     g_object_get(source, "location", &uri, NULL);
 
     GstBuffer* buffer = gst_sample_get_buffer(sample);
-    GstMapInfo map_info;
-    if(!gst_buffer_map((buffer), &map_info, GST_MAP_READ)){
-        gst_buffer_unmap((buffer), &map_info);
-        gst_sample_unref(sample);
-        return GST_FLOW_ERROR;
+    GstCaps *caps = gst_sample_get_caps(sample);
+    GstStructure *structure = gst_caps_get_structure(caps, 0);
+    int width, height;
+    gst_structure_get_int(structure, "width", &width);
+    gst_structure_get_int(structure, "height", &height);
+    const gchar *colorspace = gst_structure_get_string(structure, "format");
+    GstMapInfo map;
+    QImage image((width), height, QImage::Format_RGBA8888);
+
+    if (gst_buffer_map(buffer, &map, GST_MAP_READ)) {
+        uchar *data = image.bits();
+        memcpy(data, map.data, map.size); // 将视频帧数据复制到 QImage 中
+
+        image.save("test.jpg");
+//        image.rgbSwapped();
+        VideoQueue::moGetInstance()->mvPushVideo2Queue(uri, image);
+
+        gst_buffer_unmap(buffer, &map);
     }
 
-    cv::Mat bgra = cv::Mat(data->height(), data->width(), CV_8UC1, (char*) map_info.data, cv::Mat::AUTO_STEP);
-    cv::Mat rgba;
 
-    cv::cvtColor(bgra, rgba, cv::COLOR_BGR2RGBA);
-
-    QImage image(rgba.data, rgba.cols, rgba.rows, rgba.step, QImage::Format_RGBA8888);
-
-//    QImage image(rgba.data, rgba.cols, rgba.rows, rgba.step, QImage::Format_RGBA8888);
-    VideoQueue::moGetInstance()->mvPushVideo2Queue(uri, image);
-
-    gst_buffer_unmap((buffer), &map_info);
     gst_sample_unref(sample);
     return GST_FLOW_OK;
 }
