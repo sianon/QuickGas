@@ -11,9 +11,6 @@ public:
     using Ptr = std::shared_ptr<RrspDecode>;
     ~RrspDecode();
 
-    /**
-     * @brief 初始化编码器
-     */
     int init(int width, int height,std::string url);
 
     inline int width(){
