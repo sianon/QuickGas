@@ -1,12 +1,11 @@
 #include "custom_video_surface.h"
 
 CustomVideoSurface::CustomVideoSurface(QObject* parent)
-    : QAbstractVideoSurface(parent)
-{
+        : QAbstractVideoSurface(parent){
 }
 
-QList<QVideoFrame::PixelFormat> CustomVideoSurface::supportedPixelFormats(QAbstractVideoBuffer::HandleType handleType) const
-{
+QList<QVideoFrame::PixelFormat>
+CustomVideoSurface::supportedPixelFormats(QAbstractVideoBuffer::HandleType handleType) const{
     Q_UNUSED(handleType);
     return QList<QVideoFrame::PixelFormat>()
             << QVideoFrame::Format_ARGB32
@@ -43,14 +42,12 @@ QList<QVideoFrame::PixelFormat> CustomVideoSurface::supportedPixelFormats(QAbstr
             << QVideoFrame::Format_AdobeDng;
 }
 
-bool CustomVideoSurface::present(const QVideoFrame& frame)
-{
+bool CustomVideoSurface::present(const QVideoFrame& frame){
     auto tmp = frame.pixelFormat();
     auto tmp1 = frame.size();
     auto tmp3 = surfaceFormat().pixelFormat();
     auto tmp4 = surfaceFormat().frameSize();
-    if (surfaceFormat().pixelFormat() != frame.pixelFormat() || surfaceFormat().frameSize() != frame.size())
-    {
+    if(surfaceFormat().pixelFormat() != frame.pixelFormat() || surfaceFormat().frameSize() != frame.size()){
         setError(IncorrectFormatError);
         stop();
         return false;
@@ -63,16 +60,14 @@ bool CustomVideoSurface::present(const QVideoFrame& frame)
     return true;
 }
 
-QVideoSurfaceFormat CustomVideoSurface::surfaceFormat() const
-{
+QVideoSurfaceFormat CustomVideoSurface::surfaceFormat() const{
     // Set the desired video format
     return QVideoSurfaceFormat(QSize(960, 400), QVideoFrame::Format_ARGB32);
 }
 
-QImage CustomVideoSurface::imageFromVideoFrame(const QVideoFrame& tmp_frame)
-{
+QImage CustomVideoSurface::imageFromVideoFrame(const QVideoFrame& tmp_frame){
     QVideoFrame frame(tmp_frame);
-    if (!frame.map(QAbstractVideoBuffer::ReadOnly))
+    if(!frame.map(QAbstractVideoBuffer::ReadOnly))
         return QImage();
 
     QImage::Format format = QVideoFrame::imageFormatFromPixelFormat(frame.pixelFormat());
@@ -87,7 +82,6 @@ QImage CustomVideoSurface::imageFromVideoFrame(const QVideoFrame& tmp_frame)
     return image.copy();  // Ensure that you create a copy to detach from the original data
 }
 
-QImage CustomVideoSurface::currentImage() const
-{
+QImage CustomVideoSurface::currentImage() const{
     return currentFrameImage;
 }

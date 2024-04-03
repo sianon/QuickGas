@@ -32,15 +32,15 @@ GstFlowReturn CaptureGstBGRBuffer(GstAppSink* sink, gpointer user_data){
         gst_sample_unref(sample);
         return GST_FLOW_ERROR;
     }
-    GstCaps *caps = gst_sample_get_caps(sample);
+    GstCaps* caps = gst_sample_get_caps(sample);
     gint width, height;
-    GstStructure *structure = gst_caps_get_structure(caps, 0);
+    GstStructure* structure = gst_caps_get_structure(caps, 0);
     gst_structure_get_int(structure, "width", &width);
     gst_structure_get_int(structure, "height", &height);
-    const gchar *color_space = gst_structure_get_string(structure, "format");
+    const gchar* color_space = gst_structure_get_string(structure, "format");
     g_print("Color space: %s\n", color_space);
     QImage image(map_info.data, width, height, QImage::Format_RGBA8888);
-    image.save("test.jpg");
+
     VideoQueue::moGetInstance()->mvPushVideo2Queue(uri, image);
 
     gst_buffer_unmap((buffer), &map_info);
@@ -99,14 +99,15 @@ int RrspDecode::init(int width, int height, std::string url){
 
     appsink_ = gst_element_factory_make("appsink", "Appsink");
 
-    if(!pipeline_ || !rtspsrc_ || !rtph264depay_ || !h264parse_ || !omxh264dec_ || !videoconvert_ || ! capsfilter_ || !appsink_){
+    if(!pipeline_ || !rtspsrc_ || !rtph264depay_ || !h264parse_ || !omxh264dec_ || !videoconvert_ || !capsfilter_ ||
+       !appsink_){
         std::cerr << "Not all elements could be created" << std::endl;
         return -1;
     }
 
     // 设置
     g_object_set(G_OBJECT(rtspsrc_), "location", url_.c_str(), "latency", 1000, NULL);
-    GstCaps *caps = gst_caps_new_simple("video/x-raw", "format", G_TYPE_STRING, "RGBA", NULL);
+    GstCaps* caps = gst_caps_new_simple("video/x-raw", "format", G_TYPE_STRING, "RGBA", NULL);
     g_object_set(G_OBJECT(capsfilter_), "caps", caps, NULL);
 //    g_object_set(G_OBJECT(capsfilter_), "caps", gst_caps_new_simple("video/x-raw", "format", G_TYPE_STRING, "BGRx", "width", G_TYPE_INT, width_, "height", G_TYPE_INT, height_, nullptr), NULL);
     // Set up appsink
@@ -124,7 +125,8 @@ int RrspDecode::init(int width, int height, std::string url){
                      appsink_, nullptr);
 
     // Link elements
-    if(gst_element_link_many(rtph264depay_, h264parse_, omxh264dec_, videoconvert_, capsfilter_, appsink_, nullptr) != TRUE){
+    if(gst_element_link_many(rtph264depay_, h264parse_, omxh264dec_, videoconvert_, capsfilter_, appsink_, nullptr) !=
+       TRUE){
         std::cerr
                 << "rtspsrc_, rtph264depay_, h264parse_, omxh264dec_, capsfilter_,videoconvert_,appSink_ could not be linked"
                 << std::endl;

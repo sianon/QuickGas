@@ -4,6 +4,7 @@
 
 #ifndef QUICKGAS_VIDEO_QUEUE_H
 #define QUICKGAS_VIDEO_QUEUE_H
+
 #include <iostream>
 #include <mutex>
 #include <unordered_map>
@@ -11,25 +12,25 @@
 #include <QImage>
 #include <string>
 
-class VideoQueue {
+class VideoQueue{
 public:
-    static VideoQueue* moGetInstance() {
-//        std::lock_guard<std::mutex> lock(mutex_);
+    static VideoQueue* moGetInstance(){
+        std::lock_guard<std::mutex> lock(mutex_);
 
-        if (!instance_) {
+        if(!instance_){
             instance_ = new VideoQueue();
         }
         return instance_;
     }
 
-    void mvPushVideo2Queue(const std::string& rtsp_url, QImage image) {
+    void mvPushVideo2Queue(const std::string& rtsp_url, QImage image){
         QImage img = image.copy();
 
         rtsp_video_queue_[rtsp_url].push(img);
     }
 
-    QImage moGetVideoFromQueue(const std::string& rtsp_url) {
-        if (rtsp_video_queue_[rtsp_url].empty()) {
+    QImage moGetVideoFromQueue(const std::string& rtsp_url){
+        if(rtsp_video_queue_[rtsp_url].empty()){
             return QImage(nullptr);
         }
 
@@ -38,18 +39,23 @@ public:
         return tmp;
     }
 
-    std::list<std::string> moGetAllRtspUrl() {
+    std::list<std::string> moGetAllRtspUrl(){
         std::list<std::string> rtsp_url_list;
-        for (auto& rtsp_video_queue : rtsp_video_queue_) {
+        for(auto& rtsp_video_queue: rtsp_video_queue_){
             rtsp_url_list.push_back(rtsp_video_queue.first);
         }
         return rtsp_url_list;
     }
+
     QImage test;
+
     VideoQueue(const VideoQueue&) = delete;
+
     VideoQueue& operator=(const VideoQueue&) = delete;
+
 private:
-    VideoQueue() {}
+    VideoQueue(){}
+
     std::unordered_map<std::string, std::queue<QImage>> rtsp_video_queue_;
     static VideoQueue* instance_;
     static std::mutex mutex_;
