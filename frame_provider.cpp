@@ -71,8 +71,6 @@ void FrameProvider::setFormat(int width, int heigth, QVideoFrame::PixelFormat fo
 
 void FrameProvider::test()
 {
-//    QImage image(1280, 720, QImage::Format_ARGB32);
-
     auto urls = VideoQueue::moGetInstance()->moGetAllRtspUrl();
     if(urls.empty()) return;
 
@@ -80,23 +78,16 @@ void FrameProvider::test()
 
     if(image.isNull()) return;
 
-//    QFont font;
-//    font.setPointSize(25);
-//
-//    QPainter painter(image);
-//    painter.setFont(font);
-//    painter.drawText(image->rect(), Qt::AlignCenter, QDateTime::currentDateTime().toString());
-//    painter.end();
     auto tmp = image.rect();
     auto tmp1 = image.size();
     auto tmp2 = image.format();
 
-//    image.save("fuck1.jpg");
     QVideoFrame video_frame(image);
+    auto cs = video_frame.pixelFormat();
     //按照视频帧设置格式
     setFormat(video_frame.width(),video_frame.height(),video_frame.pixelFormat());
     if (m_surface)
-        m_surface->present(video_frame);
+        m_surface->present(image);
 }
 
 void FrameProvider::onNewVideoContentReceived(const QVideoFrame &frame)

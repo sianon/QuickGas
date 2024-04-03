@@ -12,7 +12,6 @@
 using namespace std;
 
 GstFlowReturn CaptureGstBGRBuffer(GstAppSink* sink, gpointer user_data){
-    RrspDecode* data = (RrspDecode*) user_data;
     GstSample* sample = gst_app_sink_pull_sample(sink);
 
     auto piple = GST_ELEMENT(gst_element_get_parent(sink));
@@ -27,27 +26,24 @@ GstFlowReturn CaptureGstBGRBuffer(GstAppSink* sink, gpointer user_data){
     g_object_get(source, "location", &uri, NULL);
 
     GstBuffer* buffer = gst_sample_get_buffer(sample);
+    GstMapInfo map_info;
+    if(!gst_buffer_map((buffer), &map_info, GST_MAP_READ)){
+        gst_buffer_unmap((buffer), &map_info);
+        gst_sample_unref(sample);
+        return GST_FLOW_ERROR;
+    }
     GstCaps *caps = gst_sample_get_caps(sample);
+    gint width, height;
     GstStructure *structure = gst_caps_get_structure(caps, 0);
-    int width, height;
     gst_structure_get_int(structure, "width", &width);
     gst_structure_get_int(structure, "height", &height);
-    const gchar *colorspace = gst_structure_get_string(structure, "format");
-    GstMapInfo map;
-    QImage image((width), height, QImage::Format_RGBA8888);
+    const gchar *color_space = gst_structure_get_string(structure, "format");
+    g_print("Color space: %s\n", color_space);
+    QImage image(map_info.data, width, height, QImage::Format_RGBA8888);
+    image.save("test.jpg");
+    VideoQueue::moGetInstance()->mvPushVideo2Queue(uri, image);
 
-    if (gst_buffer_map(buffer, &map, GST_MAP_READ)) {
-        uchar *data = image.bits();
-        memcpy(data, map.data, map.size); // 将视频帧数据复制到 QImage 中
-
-        image.save("test.jpg");
-//        image.rgbSwapped();
-        VideoQueue::moGetInstance()->mvPushVideo2Queue(uri, image);
-
-        gst_buffer_unmap(buffer, &map);
-    }
-
-
+    gst_buffer_unmap((buffer), &map_info);
     gst_sample_unref(sample);
     return GST_FLOW_OK;
 }
@@ -98,17 +94,20 @@ int RrspDecode::init(int width, int height, std::string url){
     h264parse_ = gst_element_factory_make("h264parse", "H264parse");
     omxh264dec_ = gst_element_factory_make("d3d11h264dec", "d3d11h264dec");
 //    nvvidconv_ = gst_element_factory_make("nvvidconv", "Nvvidconv");
-    capsfilter_ = gst_element_factory_make("capsfilter", "Capsfilter");
     videoconvert_ = gst_element_factory_make("videoconvert", "Videoconvert");
+    capsfilter_ = gst_element_factory_make("capsfilter", "Capsfilter");
+
     appsink_ = gst_element_factory_make("appsink", "Appsink");
 
-    if(!pipeline_ || !rtspsrc_ || !rtph264depay_ || !h264parse_ || !omxh264dec_ || !capsfilter_ || !videoconvert_ || !appsink_){
+    if(!pipeline_ || !rtspsrc_ || !rtph264depay_ || !h264parse_ || !omxh264dec_ || !videoconvert_ || ! capsfilter_ || !appsink_){
         std::cerr << "Not all elements could be created" << std::endl;
         return -1;
     }
 
     // 设置
     g_object_set(G_OBJECT(rtspsrc_), "location", url_.c_str(), "latency", 1000, NULL);
+    GstCaps *caps = gst_caps_new_simple("video/x-raw", "format", G_TYPE_STRING, "RGBA", NULL);
+    g_object_set(G_OBJECT(capsfilter_), "caps", caps, NULL);
 //    g_object_set(G_OBJECT(capsfilter_), "caps", gst_caps_new_simple("video/x-raw", "format", G_TYPE_STRING, "BGRx", "width", G_TYPE_INT, width_, "height", G_TYPE_INT, height_, nullptr), NULL);
     // Set up appsink
     g_object_set(G_OBJECT(appsink_), "emit-signals", TRUE, NULL);
@@ -121,11 +120,11 @@ int RrspDecode::init(int width, int height, std::string url){
 
 
     // BAdd elements to pipeline
-    gst_bin_add_many(GST_BIN(pipeline_), rtspsrc_, rtph264depay_, h264parse_, omxh264dec_, capsfilter_, videoconvert_,
+    gst_bin_add_many(GST_BIN(pipeline_), rtspsrc_, rtph264depay_, h264parse_, omxh264dec_, videoconvert_, capsfilter_,
                      appsink_, nullptr);
 
     // Link elements
-    if(gst_element_link_many(rtph264depay_, h264parse_, omxh264dec_, capsfilter_, videoconvert_, appsink_, nullptr) != TRUE){
+    if(gst_element_link_many(rtph264depay_, h264parse_, omxh264dec_, videoconvert_, capsfilter_, appsink_, nullptr) != TRUE){
         std::cerr
                 << "rtspsrc_, rtph264depay_, h264parse_, omxh264dec_, capsfilter_,videoconvert_,appSink_ could not be linked"
                 << std::endl;
