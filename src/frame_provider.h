@@ -14,25 +14,21 @@ Q_OBJECT
     Q_PROPERTY(QAbstractVideoSurface* videoSurface READ videoSurface WRITE setVideoSurface)
 public:
     FrameProvider();
-
     ~FrameProvider();
 
     QAbstractVideoSurface* videoSurface() const;
-
     void setVideoSurface(QAbstractVideoSurface* surface);
-
     void setFormat(int width, int heigth, QVideoFrame::PixelFormat format);
-
+    Q_INVOKABLE bool mbIsNoSignal();
     Q_INVOKABLE void test();
-
 public slots:
     void onNewVideoContentReceived(const QVideoFrame& frame);
-
+    void OnNoSignalTimeout();
 private:
     QAbstractVideoSurface* m_surface = NULL;
-    CustomVideoSurface* m_customSurface = NULL;
     QVideoSurfaceFormat m_format;
-    QTimer timer;
+    QTimer nosignal_timer_;
+    unsigned int nosignal_count_;
 };
 
 #endif // FRAMEPRODER_H

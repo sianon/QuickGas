@@ -7,11 +7,11 @@ import QtQuick.Controls.Material 2.12
 import "."
 import QtMultimedia 5.15
 
-//import pkg.producer 1.0
 //import pkg.custom_video_surface 1.0
 
-ApplicationWindow {
-    id:mainWindow
+ApplicationWindow{
+    id: mainWindow
+    objectName: "main_window"
     visible: true
     width: 1280
     height: 720
@@ -21,15 +21,17 @@ ApplicationWindow {
 
     //QML中的方法可以被cpp调用，也可以作为槽函数
     function qml_method(val_arg){
-        cpp_obj.onTestSlot(1,2)
-        console.log("qml method runing",val_arg,"return ok")
+        cpp_obj.onTestSlot(1, 2)
+        console.log("qml method runing", val_arg, "return ok")
         return "ok"
     }
+
     function showLsDialog(){
         var dialog = LsDialog.showModal();
         dialog.exec();
     }
-    Frame {
+
+    Frame{
         id: main_frame
         visible: true
         width: parent.width
@@ -44,13 +46,13 @@ ApplicationWindow {
         }
 
         ColumnLayout{
-            id:main_column_layout
+            id: main_column_layout
             anchors.fill: parent
             Rectangle{
                 color: "#ffd64c"
                 border.color: "#ffd64c"
             }
-            Pane {
+            Pane{
                 id: main_first_column_pane
                 visible: true
                 Layout.preferredHeight: 30
@@ -63,7 +65,7 @@ ApplicationWindow {
                     // border.color: "#21be2b"
                 }
             }
-            Pane {
+            Pane{
                 id: main_tab_btn
                 Layout.preferredHeight: 38
                 Layout.fillWidth: true
@@ -80,61 +82,67 @@ ApplicationWindow {
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
 
-                    TabBar {
+                    TabBar{
                         id: tabBar
                         Layout.preferredHeight: 28
                         background: Rectangle{
                             color: "#2c2a38"
                         }
                         currentIndex: stackView.currentIndex
-                        TabButton {
+                        TabButton{
                             anchors.verticalCenter: parent.verticalCenter
                             height: 28
                             width: 68
                             font.family: "Microsoft YaHei"
                             text: "预览"
                         }
-                        TabButton {
+                        TabButton{
                             height: 28
                             width: 68
                             anchors.verticalCenter: parent.verticalCenter
                             font.family: "Microsoft YaHei"
-                            text: "设备管理" }
-                        TabButton {
+                            text: "设备管理"
+                        }
+                        TabButton{
                             height: 28
                             width: 68
                             anchors.verticalCenter: parent.verticalCenter
                             font.family: "Microsoft YaHei"
-                            text: "气体分析" }
-                        TabButton {
+                            text: "气体分析"
+                        }
+                        TabButton{
                             height: 28
                             width: 68
                             anchors.verticalCenter: parent.verticalCenter
                             font.family: "Microsoft YaHei"
-                            text: "温度分析" }
-                        TabButton {
+                            text: "温度分析"
+                        }
+                        TabButton{
                             height: 28
                             width: 68
                             anchors.verticalCenter: parent.verticalCenter
                             font.family: "Microsoft YaHei"
-                            text: "告警历史" }
-                        TabButton {
+                            text: "告警历史"
+                        }
+                        TabButton{
                             height: 28
                             width: 68
                             anchors.verticalCenter: parent.verticalCenter
                             font.family: "Microsoft YaHei"
-                            text: "视频回放" }
-                        TabButton {
+                            text: "视频回放"
+                        }
+                        TabButton{
                             height: 28
                             width: 68
                             anchors.verticalCenter: parent.verticalCenter
                             font.family: "Microsoft YaHei"
-                            text: "用户管理" }
+                            text: "用户管理"
+                        }
                         onCurrentIndexChanged: stack_layout.currentIndex = tabBar.currentIndex
                     }
                 }
             }
-            Pane {
+            Pane{
                 id: main_tab_container
                 Layout.fillWidth: true
                 anchors.left: main_tab_btn.left
@@ -150,15 +158,15 @@ ApplicationWindow {
                     color: "#42424e"
                 }
 
-                StackLayout {
+                StackLayout{
                     id: stack_layout
                     currentIndex: 0
                     anchors.fill: parent
 
-                    Rectangle {
+                    Rectangle{
                         anchors.fill: parent
                         color: "#42424e"
-                        RowLayout {
+                        RowLayout{
                             anchors.fill: parent
                             Rectangle{
                                 id: left_column
@@ -170,12 +178,12 @@ ApplicationWindow {
                                 color: "#42424e"
                                 radius: 5
                                 //left view
-                                ColumnLayout {
+                                ColumnLayout{
                                     anchors.fill: parent
                                     anchors.left: parent.left
                                     anchors.top: parent.top
                                     // width: 300
-                                    Rectangle {
+                                    Rectangle{
                                         id: left_column_top
                                         anchors.left: parent.left
                                         anchors.top: parent.top
@@ -185,7 +193,7 @@ ApplicationWindow {
                                         color: "#2c2a38"
                                         border.color: "#42424e"
                                         radius: 5
-                                        Rectangle {
+                                        Rectangle{
                                             id: left_column_top_title
                                             anchors.left: parent.left
                                             anchors.top: parent.top
@@ -205,13 +213,13 @@ ApplicationWindow {
 
                                             }
                                         }
-                                        ListView {
+                                        ListView{
                                             anchors.left: left_column_top_title.left
                                             anchors.top: left_column_top_title.bottom
                                             anchors.bottom: parent.bottom
                                             anchors.margins: 10
                                             model: ["G800-机位1", "G800-机位2", "G900-机位23", "机位25", "机位27"]
-                                            delegate: Text {
+                                            delegate: Text{
                                                 text: modelData
                                                 font.pixelSize: 14
                                                 color: "white"
@@ -220,7 +228,7 @@ ApplicationWindow {
                                         }
                                     }
                                     //PTZ control panel
-                                    Rectangle {
+                                    Rectangle{
                                         id: left_column_bottom
                                         anchors.left: left_column_top.left
                                         anchors.bottom: parent.bottom
@@ -229,7 +237,7 @@ ApplicationWindow {
                                         height: 500
                                         color: "#2c2a38"
                                         //ptz title
-                                        Rectangle {
+                                        Rectangle{
                                             id: left_column_ptz_title
                                             anchors.left: parent.left
                                             anchors.top: parent.top
@@ -239,7 +247,7 @@ ApplicationWindow {
                                             border.color: "#2c2a38"
                                             border.width: 2
                                             radius: 5
-                                            Text {
+                                            Text{
                                                 color: "#ffffffff"
                                                 font.pixelSize: 16
                                                 font.family: "Microsoft YaHei"
@@ -249,7 +257,7 @@ ApplicationWindow {
                                             }
 
                                         }
-                                        ColumnLayout {
+                                        ColumnLayout{
                                             id: left_ptz_control_arrow
                                             anchors.left: left_column_ptz_title.left
                                             anchors.top: left_column_ptz_title.bottom
@@ -263,7 +271,7 @@ ApplicationWindow {
                                                 // border.color: "#42424e"
                                                 // border.width: 2
                                                 radius: 5
-                                                GridLayout {
+                                                GridLayout{
                                                     rows: 3
                                                     columns: 3
                                                     // anchors.left: parent.left
@@ -272,11 +280,11 @@ ApplicationWindow {
                                                     // // anchors.margins: 10
                                                     // anchors.verticalCenter: parent.verticalCenter
                                                     // anchors.horizontalCenter: parent.horizontalCenter
-                                                    Repeater {
+                                                    Repeater{
                                                         model: 9 // 创建 9 个子项
-                                                        Rectangle {
-                                                            Layout.preferredWidth: parent.width/3
-                                                            Layout.preferredHeight: parent.height/3
+                                                        Rectangle{
+                                                            Layout.preferredWidth: parent.width / 3
+                                                            Layout.preferredHeight: parent.height / 3
                                                             color: "#42424e"
                                                             radius: 5
                                                         }
@@ -284,8 +292,8 @@ ApplicationWindow {
                                                 }
                                             }
                                             //ptz focus zoom
-                                            Item { height: 20 }
-                                            Item {
+                                            Item{ height: 20 }
+                                            Item{
                                                 height: 20
                                                 width: left_column_ptz_title.width
                                                 Text{
@@ -304,12 +312,12 @@ ApplicationWindow {
                                                 // border.width: 2
                                                 radius: 5
 
-                                                RowLayout {
+                                                RowLayout{
                                                     anchors.centerIn: parent
                                                     Button{
                                                         Layout.preferredWidth: 30
                                                         Layout.preferredHeight: 30
-                                                        background: Rectangle {
+                                                        background: Rectangle{
                                                             radius: 15 // 设置圆角大小
                                                             color: control.pressed ? "red" : "lightblue"
                                                             border.color: "blue"
@@ -321,7 +329,7 @@ ApplicationWindow {
                                                     Button{
                                                         Layout.preferredWidth: 30
                                                         Layout.preferredHeight: 30
-                                                        background: Rectangle {
+                                                        background: Rectangle{
                                                             radius: 15 // 设置圆角大小
                                                             color: control.pressed ? "red" : "lightblue"
                                                             border.color: "blue"
@@ -330,13 +338,13 @@ ApplicationWindow {
                                                         }
                                                         text: "-"
                                                     }
-                                                    Item {
+                                                    Item{
                                                         Layout.fillWidth: true
                                                     }
                                                     Button{
                                                         Layout.preferredWidth: 30
                                                         Layout.preferredHeight: 30
-                                                        background: Rectangle {
+                                                        background: Rectangle{
                                                             radius: 15 // 设置圆角大小
                                                             // color: "#42424e"
                                                             border.color: "blue"
@@ -349,7 +357,7 @@ ApplicationWindow {
                                                     Button{
                                                         Layout.preferredWidth: 30
                                                         Layout.preferredHeight: 30
-                                                        background: Rectangle {
+                                                        background: Rectangle{
                                                             radius: 15 // 设置圆角大小
                                                             color: control.pressed ? "red" : "lightblue"
                                                             border.color: "blue"
@@ -360,8 +368,8 @@ ApplicationWindow {
                                                     }
                                                 }
                                             }
-                                            Item { height: 20 }
-                                            Item {
+                                            Item{ height: 20 }
+                                            Item{
                                                 height: 20
                                                 width: left_column_ptz_title.width
                                                 Text{
@@ -381,15 +389,15 @@ ApplicationWindow {
                                                 // border.width: 2
 
                                                 radius: 5
-                                                Slider {
+                                                Slider{
                                                     anchors.centerIn: parent
                                                     from: 1
                                                     value: 25
                                                     to: 100
                                                 }
                                             }
-                                            Item { height: 10 }
-                                            Item {
+                                            Item{ height: 10 }
+                                            Item{
                                                 height: 20
                                                 width: left_column_ptz_title.width
                                                 Text{
@@ -407,12 +415,12 @@ ApplicationWindow {
                                                 width: left_column_bottom.width
                                                 height: 30
                                                 color: "#2c2a38"
-                                                RowLayout {
+                                                RowLayout{
                                                     anchors.centerIn: parent
                                                     Button{
                                                         Layout.preferredWidth: 30
                                                         Layout.preferredHeight: 30
-                                                        background: Rectangle {
+                                                        background: Rectangle{
                                                             radius: 15 // 设置圆角大小
                                                             color: control.pressed ? "red" : "lightblue"
                                                             border.color: "blue"
@@ -424,7 +432,7 @@ ApplicationWindow {
                                                     Button{
                                                         Layout.preferredWidth: 30
                                                         Layout.preferredHeight: 30
-                                                        background: Rectangle {
+                                                        background: Rectangle{
                                                             radius: 15 // 设置圆角大小
                                                             color: control.pressed ? "red" : "lightblue"
                                                             border.color: "blue"
@@ -436,7 +444,7 @@ ApplicationWindow {
                                                     Button{
                                                         Layout.preferredWidth: 30
                                                         Layout.preferredHeight: 30
-                                                        background: Rectangle {
+                                                        background: Rectangle{
                                                             radius: 15 // 设置圆角大小
                                                             // color: "#42424e"
                                                             border.color: "blue"
@@ -449,7 +457,7 @@ ApplicationWindow {
                                                     Button{
                                                         Layout.preferredWidth: 30
                                                         Layout.preferredHeight: 30
-                                                        background: Rectangle {
+                                                        background: Rectangle{
                                                             radius: 15 // 设置圆角大小
                                                             color: control.pressed ? "red" : "lightblue"
                                                             border.color: "blue"
@@ -466,7 +474,7 @@ ApplicationWindow {
 
                             }
                             //preview video frame
-                            Rectangle {
+                            Rectangle{
                                 anchors.left: left_column.right
                                 anchors.top: left_column.top
                                 height: parent.height
@@ -475,71 +483,72 @@ ApplicationWindow {
                                 anchors.margins: 3
                                 // border.color: "#aaaaaf"
                                 radius: 5
-                                GridLayout {
+                                GridLayout{
                                     rows: 4
                                     columns: 4
                                     height: parent.height
                                     width: parent.width
                                     anchors.fill: parent
                                     anchors.margins: 3
-                                    // Repeater {
-                                    //     model: 16 // 创建 16 个子项
-                                        Rectangle {
-                                            Layout.preferredWidth: parent.width/4 - 6
-                                            Layout.preferredHeight: parent.height/4 -3
+                                    Repeater {
+                                        model: 16 // 创建 16 个子项
+                                        Rectangle{
+                                            Layout.preferredWidth: parent.width / 4 - 6
+                                            Layout.preferredHeight: parent.height / 4 - 3
                                             color: "#42424e"
                                             radius: 5
                                             VideoFrameChild{
+                                                id: video_frame_child_1
                                                 //                            width: 320
                                                 //                            height: 240
                                             }
 
                                         }
-                                    // }
+                                    }
                                 }
                             }
 
                         }
                     }
-                    Rectangle {
+                    Rectangle{
                         color: "lightgreen"
-                        Text {
+                        Text{
                             text: "Content for Tab 2"
                         }
                     }
 
-                    Rectangle {
+                    Rectangle{
                         color: "lightcoral"
-                        Text {
+                        Text{
                             text: "Content for Tab 3"
                         }
                     }
-                    Rectangle {
+                    Rectangle{
                         color: "lightcoral"
-                        Text {
+                        Text{
                             text: "Content for Tab 4"
                         }
                     }
-                    Rectangle {
+                    Rectangle{
                         color: "lightcoral"
-                        Text {
+                        Text{
                             text: "Content for Tab 5"
                         }
                     }
-                    Rectangle {
+                    Rectangle{
                         color: "lightcoral"
-                        Text {
+                        Text{
                             text: "Content for Tab 6"
                         }
                     }
-                    Rectangle {
+                    Rectangle{
                         anchors.fill: parent
 
                     }
                 }
             }
             //bottom status
-            Pane {
+            Pane{
                 id: main_status_bottom
                 Layout.fillWidth: true
                 Layout.preferredHeight: 26
@@ -557,16 +566,16 @@ ApplicationWindow {
                     // border.color: "#21be2b"
                 }
                 RowLayout{
-                    id:row_layout_status_bottom
+                    id: row_layout_status_bottom
                     anchors.fill: parent
 
                     Layout.alignment: Qt.AlignVCenter
-                    Item {
+                    Item{
                         Layout.minimumWidth: 20 // 自定义间距
                     }
-                    Item {
+                    Item{
                         anchors.verticalCenter: parent.verticalCenter
-                        Rectangle {
+                        Rectangle{
                             width: 15
                             height: 15
                             color: "red"
@@ -574,41 +583,41 @@ ApplicationWindow {
                             anchors.verticalCenter: parent.verticalCenter
                         }
                     }
-                    Text {
+                    Text{
                         text: "西南服务器:"
                         color: "white"
                         font.pixelSize: 12
                         // Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                     }
-                    Text {
+                    Text{
                         text: "未连接..."
                         color: "white"
                         font.pixelSize: 12
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                     }
-                    Item {
+                    Item{
                         Layout.fillWidth: true // 自定义间距
                     }
-                    Text {
+                    Text{
                         color: "white"
                         text: "处理器:"
                         font.pixelSize: 12
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                     }
-                    ProgressBar {
+                    ProgressBar{
                         value: 70
                         padding: 1
-                        background: Rectangle {
+                        background: Rectangle{
                             implicitWidth: 100
                             implicitHeight: 14
                             color: "#e6e6e6"
                             radius: 5
                         }
-                        contentItem: Item {
+                        contentItem: Item{
                             implicitWidth: 100
                             implicitHeight: 12
 
-                            Rectangle {
+                            Rectangle{
                                 width: 50
                                 height: parent.height
                                 radius: 4
@@ -616,26 +625,26 @@ ApplicationWindow {
                             }
                         }
                     }
-                    Text {
+                    Text{
                         color: "white"
                         text: "内存:"
                         font.pixelSize: 12
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                     }
-                    ProgressBar {
+                    ProgressBar{
                         value: 50
                         padding: 1
-                        background: Rectangle {
+                        background: Rectangle{
                             implicitWidth: 100
                             implicitHeight: 14
                             color: "#e6e6e6"
                             radius: 5
                         }
-                        contentItem: Item {
+                        contentItem: Item{
                             implicitWidth: 100
                             implicitHeight: 12
 
-                            Rectangle {
+                            Rectangle{
                                 width: 80
                                 height: parent.height
                                 radius: 4
@@ -643,27 +652,27 @@ ApplicationWindow {
                             }
                         }
                     }
-                    Text {
+                    Text{
                         width: 40
                         color: "white"
                         text: "硬盘:"
                         font.pixelSize: 12
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                     }
-                    ProgressBar {
+                    ProgressBar{
                         value: 20
                         padding: 1
-                        background: Rectangle {
+                        background: Rectangle{
                             implicitWidth: 100
                             implicitHeight: 14
                             color: "#e6e6e6"
                             radius: 5
                         }
-                        contentItem: Item {
+                        contentItem: Item{
                             implicitWidth: 100
                             implicitHeight: 12
 
-                            Rectangle {
+                            Rectangle{
                                 width: 50
                                 height: parent.height
                                 radius: 4
@@ -671,26 +680,26 @@ ApplicationWindow {
                             }
                         }
                     }
-                    Text {
+                    Text{
                         color: "white"
                         text: "网络:"
                         font.pixelSize: 12
                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                     }
-                    ProgressBar {
+                    ProgressBar{
                         value: 80
                         padding: 1
-                        background: Rectangle {
+                        background: Rectangle{
                             implicitWidth: 100
                             implicitHeight: 14
                             color: "#e6e6e6"
                             radius: 5
                         }
-                        contentItem: Item {
+                        contentItem: Item{
                             implicitWidth: 100
                             implicitHeight: 12
 
-                            Rectangle {
+                            Rectangle{
                                 width: 90
                                 height: parent.height
                                 radius: 4
@@ -698,7 +707,7 @@ ApplicationWindow {
                             }
                         }
                     }
-                    Item {
+                    Item{
                         Layout.minimumWidth: 8 // 自定义间距
                     }
                 }

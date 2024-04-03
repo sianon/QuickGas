@@ -2,30 +2,24 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "producer.h"
-#include "frame_provider.h"
-#include "rtsp_decode.h"
+#include "src/frame_provider.h"
+#include "src/rtsp_decode.h"
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]){
     QGuiApplication app(argc, argv);
-
     QQmlApplicationEngine engine;
+    QQmlContext* ctx = engine.rootContext();
+//    FrameProvider provider;
+//
+//    ctx->setContextProperty("_provider", &provider);
 
-    QQmlContext *ctx = engine.rootContext();
-
-    FrameProvider provider;
-    ctx->setContextProperty("_provider", &provider);
-//    ctx->setContextProperty("Config", config);
-
+    qmlRegisterType<FrameProvider>("Local", 1, 0, "FrameProvider");
     qmlRegisterType<Producer>("pkg.producer", 1, 0, "Producers");
     qmlRegisterType<Producer>("pkg.custom_video_surface", 1, 0, "CustomVideoSurface");
 
-    const QUrl url(QStringLiteral("qrc:/main.qml"));
-//    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated, &app, [url](QObject *obj, const QUrl &objUrl) {
-//        if (!obj && url == objUrl) QCoreApplication::exit(-1);
-//    },
-//                     Qt::QueuedConnection);
-    engine.load(url);
+    engine.load(QStringLiteral("qrc:/main.qml"));
+    QObject* rootObject = engine.rootObjects().value(0);
+    QObject* item = rootObject->findChildren<QObject*>("main_window").value(0);
 
     gst_init(&argc, &argv);
     RrspDecode rtspDecode;

@@ -37,10 +37,12 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 set(PROJECT_SOURCES
         main.cpp
         qml.qrc
-        rtsp_decode.h
-        rtsp_decode.cpp
+        src/rtsp_decode.h
+        src/rtsp_decode.cpp
         src/video_queue.cpp
         src/video_queue.h
+        src/circular_queue.cpp
+        src/circular_queue.h
 )
 
 
@@ -50,7 +52,7 @@ add_executable(QuickGas
         producer.cpp
         custom_video_surface.h
         custom_video_surface.cpp
-        frame_provider.h frame_provider.cpp
+        src/frame_provider.h src/frame_provider.cpp
         video_dlg.h
 )
 

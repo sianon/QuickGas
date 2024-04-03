@@ -14,8 +14,10 @@
 #include "video_dlg.h"
 #include "src/video_queue.h"
 
-FrameProvider::FrameProvider(){
-
+FrameProvider::FrameProvider()
+: nosignal_count_(6){
+    nosignal_timer_.setInterval(1000);
+    connect(&nosignal_timer_, &QTimer::timeout, this, &FrameProvider::OnNoSignalTimeout);
 }
 
 FrameProvider::~FrameProvider(){
@@ -61,13 +63,11 @@ void FrameProvider::test(){
 
     if(image.isNull()) return;
 
-    auto tmp = image.rect();
-    auto tmp1 = image.size();
-    auto tmp2 = image.format();
+    nosignal_count_ >= 6 ? nosignal_count_ = 6 : nosignal_count_++;
 
     QVideoFrame video_frame(image);
     auto cs = video_frame.pixelFormat();
-    //按照视频帧设置格式
+
     setFormat(video_frame.width(), video_frame.height(), video_frame.pixelFormat());
     if(m_surface)
         m_surface->present(image);
@@ -88,14 +88,16 @@ void FrameProvider::onNewVideoContentReceived(const QVideoFrame& frame){
     QVideoFrame video_frame(image);
     video_frame.unmap();
 
-    //按照视频帧设置格式
     setFormat(video_frame.width(), video_frame.height(), video_frame.pixelFormat());
     if(m_surface)
         m_surface->present(video_frame);
+}
 
-    VideoDialog dialog;
-    dialog.show();
-    // 在 QDialog 中显示 QVideoFrame
-    dialog.setVideoFrame(video_frame);
+bool FrameProvider::mbIsNoSignal(){
+    return nosignal_count_ == 0 ? true : false;
+}
+
+void FrameProvider::OnNoSignalTimeout(){
+    nosignal_count_ > 0 ? nosignal_count_-- : nosignal_count_ = 0;
 }
 

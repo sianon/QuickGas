@@ -7,16 +7,17 @@
 #include <QQmlEngine>
 #include <QPointer>
 #include <QTimer>
+
 class QVideoSink;
-class Producer : public QObject
-{
-    Q_OBJECT
+
+class Producer : public QObject{
+Q_OBJECT
     QML_ELEMENT
     Q_PROPERTY(QVideoSink* videoSinks READ getVideoSink WRITE setVideoSink NOTIFY videoSinkChanged)
 public:
-    Producer(QObject *parent=nullptr);
-    QVideoSink *getVideoSink() const;
-    Q_INVOKABLE void setVideoSink(QVideoSink *newVideoSink);
+    Producer(QObject* parent = nullptr);
+    QVideoSink* getVideoSink() const;
+    Q_INVOKABLE void setVideoSink(QVideoSink* newVideoSink);
     Q_INVOKABLE void start();
 signals:
     void videoSinkChanged();

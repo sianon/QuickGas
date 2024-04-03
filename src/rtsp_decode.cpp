@@ -38,7 +38,7 @@ GstFlowReturn CaptureGstBGRBuffer(GstAppSink* sink, gpointer user_data){
     gst_structure_get_int(structure, "width", &width);
     gst_structure_get_int(structure, "height", &height);
     const gchar* color_space = gst_structure_get_string(structure, "format");
-    g_print("Color space: %s\n", color_space);
+//    g_print("Color space: %s\n", color_space);
     QImage image(map_info.data, width, height, QImage::Format_RGBA8888);
 
     VideoQueue::moGetInstance()->mvPushVideo2Queue(uri, image);
@@ -93,7 +93,7 @@ int RrspDecode::init(int width, int height, std::string url){
     rtph264depay_ = gst_element_factory_make("rtph264depay", "Rtph264depay");
     h264parse_ = gst_element_factory_make("h264parse", "H264parse");
     omxh264dec_ = gst_element_factory_make("d3d11h264dec", "d3d11h264dec");
-//    nvvidconv_ = gst_element_factory_make("nvvidconv", "Nvvidconv");
+    //    nvvidconv_ = gst_element_factory_make("nvvidconv", "Nvvidconv");
     videoconvert_ = gst_element_factory_make("videoconvert", "Videoconvert");
     capsfilter_ = gst_element_factory_make("capsfilter", "Capsfilter");
 
@@ -109,7 +109,7 @@ int RrspDecode::init(int width, int height, std::string url){
     g_object_set(G_OBJECT(rtspsrc_), "location", url_.c_str(), "latency", 1000, NULL);
     GstCaps* caps = gst_caps_new_simple("video/x-raw", "format", G_TYPE_STRING, "RGBA", NULL);
     g_object_set(G_OBJECT(capsfilter_), "caps", caps, NULL);
-//    g_object_set(G_OBJECT(capsfilter_), "caps", gst_caps_new_simple("video/x-raw", "format", G_TYPE_STRING, "BGRx", "width", G_TYPE_INT, width_, "height", G_TYPE_INT, height_, nullptr), NULL);
+    //    g_object_set(G_OBJECT(capsfilter_), "caps", gst_caps_new_simple("video/x-raw", "format", G_TYPE_STRING, "BGRx", "width", G_TYPE_INT, width_, "height", G_TYPE_INT, height_, nullptr), NULL);
     // Set up appsink
     g_object_set(G_OBJECT(appsink_), "emit-signals", TRUE, NULL);
     g_object_set(G_OBJECT(appsink_), "sync", FALSE, NULL);

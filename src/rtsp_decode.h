@@ -29,14 +29,14 @@ public:
 
 private:
     GstElement* pipeline_;
-    GstElement* rtspsrc_;      // 读取rtsp流
-    GstElement* rtph264depay_; // 从rtspsrc接收到rtp包
-    GstElement* h264parse_;    // 分割输出H264帧数据
-    GstElement* omxh264dec_;   // 硬解码H264帧数据
-    GstElement* nvvidconv_;    // 硬解码drm_prime帧数据成BGRx
-    GstElement* capsfilter_;   // 指定输出的数据类型
-    GstElement* videoconvert_; // 转换video数据格式
-    GstElement* appsink_;      // 获取BGRx数据
+    GstElement* rtspsrc_;
+    GstElement* rtph264depay_;
+    GstElement* h264parse_;
+    GstElement* omxh264dec_;
+    GstElement* nvvidconv_;
+    GstElement* capsfilter_;
+    GstElement* videoconvert_;
+    GstElement* appsink_;
 
     int width_ = 0;
     int height_ = 0;

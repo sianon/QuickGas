@@ -3,7 +3,7 @@ import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtMultimedia 5.15
-
+import Local 1.0
 Item{
     id: dialog
     width: parent.width
@@ -46,10 +46,13 @@ Item{
 
                 height: parent.height - top_status.height - bottom_btn.height
                 width: parent.width
+                FrameProvider{
+                    id: provider
+                }
                 VideoOutput {
                     id: video_outputs
                     anchors.fill: parent
-                    source: _provider
+                    source: provider
                 }
                 Timer{
                     id: myTimer
@@ -58,11 +61,25 @@ Item{
                     repeat: true
 
                     onTriggered: {
-                        _provider.test();
+                        provider.test();
+                    }
+                }
+                Timer{
+                    id: signal_timer
+                    interval: 1000
+                    running: true
+                    repeat: true
+
+                    onTriggered: {
+                        if(!provider.mbIsNoSignal())
+                            signal_status.text = "";
+                        else
+                            signal_status.text = "无信号";
                     }
                 }
                 color: "#2c2a38"
                 Text {
+                    id: signal_status
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
 
