@@ -498,11 +498,11 @@ ApplicationWindow{
                                             Layout.preferredHeight: parent.height / 4 - 3
                                             color: "#42424e"
                                             radius: 5
-                                            VideoFrameChild{
-                                                id: video_frame_child_1
-                                                //                            width: 320
-                                                //                            height: 240
-                                            }
+//                                            VideoFrameChild{
+//                                                id: video_frame_child_1
+//                                                //                            width: 320
+//                                                //                            height: 240
+//                                            }
 
                                         }
                                     }
@@ -554,8 +554,8 @@ ApplicationWindow{
                 Layout.fillWidth: true
                 Layout.preferredHeight: 26
 
-//                anchors.left: parent.left
-//                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
 
                 leftPadding: 1 // 左内边距
                 rightPadding: 1 // 右内边距
@@ -575,7 +575,7 @@ ApplicationWindow{
                         Layout.minimumWidth: 20 // 自定义间距
                     }
                     Item{
-//                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.verticalCenter: parent.verticalCenter
                         Rectangle{
                             width: 15
                             height: 15
@@ -588,7 +588,7 @@ ApplicationWindow{
                         text: "西南服务器:"
                         color: "white"
                         font.pixelSize: 12
-                        // Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+//                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                     }
                     Text{
                         text: "未连接..."
