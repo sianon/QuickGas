@@ -498,11 +498,11 @@ ApplicationWindow{
                                             Layout.preferredHeight: parent.height / 4 - 3
                                             color: "#42424e"
                                             radius: 5
-//                                            VideoFrameChild{
-//                                                id: video_frame_child_1
-//                                                //                            width: 320
-//                                                //                            height: 240
-//                                            }
+                                            VideoFrameChild{
+                                                id: video_frame_child_1
+                                                //                            width: 320
+                                                //                            height: 240
+                                            }
 
                                         }
                                     }

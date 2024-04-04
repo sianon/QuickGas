@@ -29,8 +29,9 @@ Item{
                 color: "#42424e"
                 //top status
                 RowLayout{
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: parent.right
+//                    anchors.verticalCenter: parent.verticalCenter
+//                    anchors.right: parent.right
+
                     Label{
                         font.pixelSize: 16
                         rightPadding: 6
@@ -99,12 +100,14 @@ Item{
                 RowLayout{
                     height: parent.height
                     width: parent.width
-                    anchors.leftMargin: 5
-                    anchors.rightMargin: 5
+//                    anchors.leftMargin: 5
+//                    anchors.rightMargin: 5
 
                     anchors.fill: bottom_btn
                     anchors.verticalCenter: parent.verticalCenter
-
+                    Item{
+                        width: 3
+                    }
                     Rectangle{
                         width: 15
                         height: 15
@@ -162,6 +165,9 @@ Item{
                             anchors.fill: parent
                         }
                         text: "设"
+                    }
+                    Item{
+                        width: 3
                     }
                 }
             }
