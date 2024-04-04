@@ -11,6 +11,7 @@
 #include <queue>
 #include <QImage>
 #include <string>
+#include "circular_queue.hpp"
 
 class VideoQueue{
 public:
@@ -27,6 +28,7 @@ public:
         QImage img = image.copy();
 
         rtsp_video_queue_[rtsp_url].push(img);
+        rtsp_video_queue_t[rtsp_url].enQueue(img);
     }
 
     QImage moGetVideoFromQueue(const std::string& rtsp_url){
@@ -47,16 +49,15 @@ public:
         return rtsp_url_list;
     }
 
-    QImage test;
-
     VideoQueue(const VideoQueue&) = delete;
 
     VideoQueue& operator=(const VideoQueue&) = delete;
-
+    CircularQueue<QImage> c_que_;
 private:
     VideoQueue(){}
 
     std::unordered_map<std::string, std::queue<QImage>> rtsp_video_queue_;
+    std::unordered_map<std::string, CircularQueue<QImage>> rtsp_video_queue_t;
     static VideoQueue* instance_;
     static std::mutex mutex_;
 };

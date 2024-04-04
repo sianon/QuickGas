@@ -11,7 +11,7 @@ import QtMultimedia 5.15
 
 ApplicationWindow{
     id: mainWindow
-    objectName: "main_window"
+
     visible: true
     width: 1280
     height: 720
@@ -55,6 +55,7 @@ ApplicationWindow{
             Pane{
                 id: main_first_column_pane
                 visible: true
+                objectName: "main_window"
                 Layout.preferredHeight: 30
                 Layout.fillWidth: true
                 anchors.left: parent.left
@@ -319,7 +320,7 @@ ApplicationWindow{
                                                         Layout.preferredHeight: 30
                                                         background: Rectangle{
                                                             radius: 15 // 设置圆角大小
-                                                            color: control.pressed ? "red" : "lightblue"
+                                                            color: parent.pressed ? "red" : "lightblue"
                                                             border.color: "blue"
                                                             border.width: 1
                                                             anchors.fill: parent
@@ -331,7 +332,7 @@ ApplicationWindow{
                                                         Layout.preferredHeight: 30
                                                         background: Rectangle{
                                                             radius: 15 // 设置圆角大小
-                                                            color: control.pressed ? "red" : "lightblue"
+                                                            color: parent.pressed ? "red" : "lightblue"
                                                             border.color: "blue"
                                                             border.width: 1
                                                             anchors.fill: parent
@@ -359,7 +360,7 @@ ApplicationWindow{
                                                         Layout.preferredHeight: 30
                                                         background: Rectangle{
                                                             radius: 15 // 设置圆角大小
-                                                            color: control.pressed ? "red" : "lightblue"
+                                                            color: parent.pressed ? "red" : "lightblue"
                                                             border.color: "blue"
                                                             border.width: 1
                                                             anchors.fill: parent
@@ -422,7 +423,7 @@ ApplicationWindow{
                                                         Layout.preferredHeight: 30
                                                         background: Rectangle{
                                                             radius: 15 // 设置圆角大小
-                                                            color: control.pressed ? "red" : "lightblue"
+                                                            color: parent.pressed ? "red" : "lightblue"
                                                             border.color: "blue"
                                                             border.width: 1
                                                             anchors.fill: parent
@@ -434,7 +435,7 @@ ApplicationWindow{
                                                         Layout.preferredHeight: 30
                                                         background: Rectangle{
                                                             radius: 15 // 设置圆角大小
-                                                            color: control.pressed ? "red" : "lightblue"
+                                                            color: parent.pressed ? "red" : "lightblue"
                                                             border.color: "blue"
                                                             border.width: 1
                                                             anchors.fill: parent
@@ -459,7 +460,7 @@ ApplicationWindow{
                                                         Layout.preferredHeight: 30
                                                         background: Rectangle{
                                                             radius: 15 // 设置圆角大小
-                                                            color: control.pressed ? "red" : "lightblue"
+                                                            color: parent.pressed ? "red" : "lightblue"
                                                             border.color: "blue"
                                                             border.width: 1
                                                             anchors.fill: parent
@@ -490,7 +491,7 @@ ApplicationWindow{
                                     width: parent.width
                                     anchors.fill: parent
                                     anchors.margins: 3
-                                    Repeater {
+                                    Repeater{
                                         model: 16 // 创建 16 个子项
                                         Rectangle{
                                             Layout.preferredWidth: parent.width / 4 - 6
@@ -553,8 +554,8 @@ ApplicationWindow{
                 Layout.fillWidth: true
                 Layout.preferredHeight: 26
 
-                anchors.left: parent.left
-                anchors.bottom: parent.bottom
+//                anchors.left: parent.left
+//                anchors.bottom: parent.bottom
 
                 leftPadding: 1 // 左内边距
                 rightPadding: 1 // 右内边距
@@ -574,7 +575,7 @@ ApplicationWindow{
                         Layout.minimumWidth: 20 // 自定义间距
                     }
                     Item{
-                        anchors.verticalCenter: parent.verticalCenter
+//                        anchors.verticalCenter: parent.verticalCenter
                         Rectangle{
                             width: 15
                             height: 15

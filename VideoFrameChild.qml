@@ -4,12 +4,13 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtMultimedia 5.15
 import Local 1.0
+
 Item{
     id: dialog
     width: parent.width
     height: parent.height
 
-    ColumnLayout {
+    ColumnLayout{
         anchors.fill: parent
         anchors.margins: 1
         Rectangle{
@@ -18,7 +19,7 @@ Item{
             radius: 5
             // border.color: "pink"
             border.width: 1
-            Rectangle {
+            Rectangle{
                 id: top_status
                 anchors.left: parent.left
                 anchors.top: parent.top
@@ -27,7 +28,7 @@ Item{
                 width: parent.width
                 color: "#42424e"
                 //top status
-                RowLayout {
+                RowLayout{
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     Label{
@@ -39,7 +40,7 @@ Item{
                 }
             }
             //video frame
-            Rectangle {
+            Rectangle{
                 id: video_frame
                 anchors.left: parent.left
                 anchors.bottom: bottom_btn.top
@@ -49,18 +50,18 @@ Item{
                 FrameProvider{
                     id: provider
                 }
-                VideoOutput {
+                VideoOutput{
                     id: video_outputs
                     anchors.fill: parent
                     source: provider
                 }
                 Timer{
                     id: myTimer
-                    interval: 1000/25
+                    interval: 1000 / 25
                     running: true
                     repeat: true
 
-                    onTriggered: {
+                    onTriggered:{
                         provider.test();
                     }
                 }
@@ -70,15 +71,12 @@ Item{
                     running: true
                     repeat: true
 
-                    onTriggered: {
-                        if(!provider.mbIsNoSignal())
-                            signal_status.text = "";
-                        else
-                            signal_status.text = "无信号";
+                    onTriggered:{
+                        if(!provider.mbIsNoSignal()) signal_status.text = ""; else signal_status.text = "无信号";
                     }
                 }
                 color: "#2c2a38"
-                Text {
+                Text{
                     id: signal_status
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -98,7 +96,7 @@ Item{
                 color: "#42424e"
 
                 // radius: 15
-                RowLayout {
+                RowLayout{
                     height: parent.height
                     width: parent.width
                     anchors.leftMargin: 5
@@ -107,48 +105,58 @@ Item{
                     anchors.fill: bottom_btn
                     anchors.verticalCenter: parent.verticalCenter
 
-                    Rectangle {
+                    Rectangle{
                         width: 15
                         height: 15
-                        anchors.verticalCenter: parent.verticalCenter
+//                        anchors.verticalCenter: parent.verticalCenter
                         color: "red"
                         radius: width / 2
                     }
 
-                    Item {
+                    Item{
                         Layout.fillWidth: true
                     }
-                    Button {
+                    Button{
                         // id: control
                         Layout.preferredWidth: 18
                         Layout.preferredHeight: 18
-                        background: Rectangle {
+                        background: Rectangle{
                             radius: 8 // 设置圆角大小
-                            color: control.pressed ? "red" : "lightblue"
+                            color: parent.pressed ? "red" : "lightblue"
                             border.color: "blue"
                             border.width: 1
                             anchors.fill: parent
                         }
                         text: qsTr("警")
                     }
-                    Button {
-                        Layout.preferredWidth: 18
+                    Button{
+                        id: fucks
+                        Layout.preferredWidth: 38
                         Layout.preferredHeight: 18
-                        background: Rectangle {
+                        background: Rectangle{
                             radius: 8 // 设置圆角大小
-                            color: control.pressed ? "lightgray" : "lightblue"
+                            color: parent.pressed ? "lightgray" : "lightblue"
                             border.color: "blue"
                             border.width: 1
                             anchors.fill: parent
                         }
+                        //                        style: ButtonStyle {
+                        //                            background: Rectangle {
+                        //                                implicitWidth: control.width
+                        //                                implicitHeight: control.height
+                        //                                color: control.pressed ? "lightblue" : "lightgray" // 设置按下时的颜色
+                        //                            }
+                        //                        }
                         text: "录"
+                        onClicked:{
+                        }
                     }
-                    Button {
+                    Button{
                         Layout.preferredWidth: 18
                         Layout.preferredHeight: 18
-                        background: Rectangle {
+                        background: Rectangle{
                             radius: 8 // 设置圆角大小
-                            color: control.pressed ? "lightgray" : "lightblue"
+                            color: parent.pressed ? "lightgray" : "lightblue"
                             border.color: "blue"
                             border.width: 1
                             anchors.fill: parent

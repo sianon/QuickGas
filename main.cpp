@@ -9,9 +9,9 @@ int main(int argc, char* argv[]){
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
     QQmlContext* ctx = engine.rootContext();
-//    FrameProvider provider;
-//
-//    ctx->setContextProperty("_provider", &provider);
+    FrameProvider provider;
+
+    ctx->setContextProperty("_provider", &provider);
 
     qmlRegisterType<FrameProvider>("Local", 1, 0, "FrameProvider");
     qmlRegisterType<Producer>("pkg.producer", 1, 0, "Producers");
@@ -19,7 +19,7 @@ int main(int argc, char* argv[]){
 
     engine.load(QStringLiteral("qrc:/main.qml"));
     QObject* rootObject = engine.rootObjects().value(0);
-    QObject* item = rootObject->findChildren<QObject*>("main_window").value(0);
+    QObject* item = rootObject->findChild<QObject*>("main_window");
 
     gst_init(&argc, &argv);
     RrspDecode rtspDecode;
