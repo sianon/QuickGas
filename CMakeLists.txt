@@ -41,8 +41,7 @@ set(PROJECT_SOURCES
         src/rtsp_decode.cpp
         src/video_queue.cpp
         src/video_queue.h
-        src/circular_queue.cpp
-        src/circular_queue.h
+        src/circular_queue.hpp
 )
 
 
@@ -58,9 +57,11 @@ add_executable(QuickGas
 
 
 target_link_libraries(QuickGas
-        PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick Qt${QT_VERSION_MAJOR}::Qml Qt${QT_VERSION_MAJOR}::Widgets Qt5::Multimedia Qt5::MultimediaWidgets ${GLIB_LIBRARIES} ${GOBJECT_LIBRARIES} ${GST_LIBRARIES} ${OpenCV_LIBS} ${GSTREAMER_RTSP_SERVER_LIBRARIES})
+        PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick Qt${QT_VERSION_MAJOR}::Qml Qt${QT_VERSION_MAJOR}::Widgets Qt5::Multimedia Qt5::MultimediaWidgets ${GLIB_LIBRARIES} ${GOBJECT_LIBRARIES} ${GST_LIBRARIES} ${OpenCV_LIBS})
 
-
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        QT_QML_DEBUG true
+    )
 if(${QT_VERSION} VERSION_LESS 6.1.0)
     set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.quick_demo)
 endif()
