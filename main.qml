@@ -169,30 +169,25 @@ ApplicationWindow{
                         color: "#42424e"
                         RowLayout{
                             anchors.fill: parent
+                            spacing: 5
                             Rectangle{
                                 id: left_column
                                 height: parent.height
                                 width: 300
                                 anchors.left: parent.left
                                 anchors.top: parent.top
-                                anchors.bottom: parent.bottom
                                 color: "#42424e"
                                 radius: 5
                                 //left view
                                 ColumnLayout{
                                     anchors.fill: parent
-                                    anchors.left: parent.left
-                                    anchors.top: parent.top
-                                    // width: 300
                                     Rectangle{
                                         id: left_column_top
-                                        anchors.left: parent.left
-                                        anchors.top: parent.top
-                                        anchors.bottom: left_column_bottom.top
+                                        anchors.margins: 5
+                                        Layout.alignment: Qt.AlignTop
                                         width: parent.width
-
+                                        height: 300
                                         color: "#2c2a38"
-                                        border.color: "#42424e"
                                         radius: 5
                                         Rectangle{
                                             id: left_column_top_title
@@ -215,9 +210,12 @@ ApplicationWindow{
                                             }
                                         }
                                         ListView{
+                                            visible: true
                                             anchors.left: left_column_top_title.left
                                             anchors.top: left_column_top_title.bottom
-                                            anchors.bottom: parent.bottom
+                                            width: parent.width
+                                            height: 300
+                                            //                                            anchors.bottom: parent.bottom
                                             anchors.margins: 10
                                             model: ["G800-机位1", "G800-机位2", "G900-机位23", "机位25", "机位27"]
                                             delegate: Text{
@@ -231,14 +229,17 @@ ApplicationWindow{
                                     //PTZ control panel
                                     Rectangle{
                                         id: left_column_bottom
+                                        visible: true
+                                        Layout.fillHeight: true
                                         anchors.left: left_column_top.left
-                                        anchors.bottom: parent.bottom
+                                        anchors.top: left_column_top.bottom
+                                        anchors.topMargin: 5
                                         radius: 5
                                         width: parent.width
-                                        height: 500
                                         color: "#2c2a38"
                                         //ptz title
                                         Rectangle{
+                                            visible: true
                                             id: left_column_ptz_title
                                             anchors.left: parent.left
                                             anchors.top: parent.top
@@ -258,149 +259,196 @@ ApplicationWindow{
                                             }
 
                                         }
-                                        ColumnLayout{
+                                        Rectangle{
+                                            visible: true
                                             id: left_ptz_control_arrow
                                             anchors.left: left_column_ptz_title.left
                                             anchors.top: left_column_ptz_title.bottom
+                                            width: parent.width
+                                            color: "#2c2a38"
+//                                            border.color: "red"
                                             //ptz arrow
                                             Rectangle{
-                                                anchors.left: parent.left
-                                                anchors.top: parent.top
-                                                width: left_column_ptz_title.width
-                                                height: 216
+                                                id: ptz_control_arrow
                                                 color: "#2c2a38"
-                                                // border.color: "#42424e"
-                                                // border.width: 2
+//                                                border.color: "red"
+                                                width: 180
+                                                height: 180
+                                                anchors.horizontalCenter: parent.horizontalCenter
                                                 radius: 5
                                                 GridLayout{
+                                                    anchors.margins: 8
                                                     rows: 3
                                                     columns: 3
-                                                    // anchors.left: parent.left
-                                                    // anchors.top: parent.top
                                                     anchors.fill: parent
-                                                    // // anchors.margins: 10
-                                                    // anchors.verticalCenter: parent.verticalCenter
-                                                    // anchors.horizontalCenter: parent.horizontalCenter
                                                     Repeater{
                                                         model: 9 // 创建 9 个子项
-                                                        Rectangle{
-                                                            Layout.preferredWidth: parent.width / 3
-                                                            Layout.preferredHeight: parent.height / 3
-                                                            color: "#42424e"
-                                                            radius: 5
+                                                        Button{
+                                                            Layout.preferredWidth: parent.width / 3 - 4
+                                                            Layout.preferredHeight: parent.height / 3 - 4
+                                                            background: Rectangle{
+                                                                radius: 15
+                                                                color: parent.pressed ? "#2c2a38" : "#42424e"
+                                                                border.color: "blue"
+                                                                border.width: 1
+                                                                anchors.fill: parent
+                                                            }
                                                         }
                                                     }
                                                 }
                                             }
                                             //ptz focus zoom
-                                            Item{ height: 20 }
-                                            Item{
-                                                height: 20
-                                                width: left_column_ptz_title.width
-                                                Text{
-                                                    color: "#ffffffff"
-                                                    font.pixelSize: 12
-                                                    anchors.horizontalCenter: parent.horizontalCenter
-                                                    font.family: "Microsoft YaHei"
-                                                    text: "对焦"
-                                                }
-                                            }
-                                            Rectangle{
-                                                width: left_column_ptz_title.width
-                                                height: 30
-                                                color: "#2c2a38"
-                                                // border.color: "#42424e"
-                                                // border.width: 2
-                                                radius: 5
+                                            //                                            Item{ height: 20 }
 
-                                                RowLayout{
-                                                    anchors.centerIn: parent
-                                                    Button{
-                                                        Layout.preferredWidth: 30
-                                                        Layout.preferredHeight: 30
-                                                        background: Rectangle{
-                                                            radius: 15 // 设置圆角大小
-                                                            color: parent.pressed ? "red" : "lightblue"
-                                                            border.color: "blue"
-                                                            border.width: 1
-                                                            anchors.fill: parent
-                                                        }
-                                                        text: "+"
-                                                    }
-                                                    Button{
-                                                        Layout.preferredWidth: 30
-                                                        Layout.preferredHeight: 30
-                                                        background: Rectangle{
-                                                            radius: 15 // 设置圆角大小
-                                                            color: parent.pressed ? "red" : "lightblue"
-                                                            border.color: "blue"
-                                                            border.width: 1
-                                                            anchors.fill: parent
-                                                        }
-                                                        text: "-"
-                                                    }
-                                                    Item{
-                                                        Layout.fillWidth: true
-                                                    }
-                                                    Button{
-                                                        Layout.preferredWidth: 30
-                                                        Layout.preferredHeight: 30
-                                                        background: Rectangle{
-                                                            radius: 15 // 设置圆角大小
-                                                            // color: "#42424e"
-                                                            border.color: "blue"
-                                                            border.width: 1
-                                                            anchors.fill: parent
-                                                        }
-                                                        text: "+"
-                                                        font.pixelSize: 16
-                                                    }
-                                                    Button{
-                                                        Layout.preferredWidth: 30
-                                                        Layout.preferredHeight: 30
-                                                        background: Rectangle{
-                                                            radius: 15 // 设置圆角大小
-                                                            color: parent.pressed ? "red" : "lightblue"
-                                                            border.color: "blue"
-                                                            border.width: 1
-                                                            anchors.fill: parent
-                                                        }
-                                                        text: "-"
+                                            Rectangle{
+                                                visible: true
+                                                id: focus_zoom_control
+                                                anchors.left: parent.left
+                                                anchors.top: ptz_control_arrow.bottom
+                                                anchors.topMargin: 15
+                                                width: left_column_ptz_title.width
+                                                height: 20
+                                                color: "transparent"
+                                                radius: 5
+                                                Rectangle{
+                                                    visible: true
+                                                    anchors.left: parent.left
+                                                    anchors.top: parent.top
+                                                    id: focus_zoom_txt
+                                                    color: "transparent"
+                                                    height: 20
+                                                    width: left_column_ptz_title.width
+                                                    anchors.verticalCenter: parent.verticalCenter
+                                                    Text{
+                                                        color: "#ffffffff"
+                                                        font.pixelSize: 12
+                                                        anchors.horizontalCenter: parent.horizontalCenter
+                                                        font.family: "Microsoft YaHei"
+                                                        text: "对焦"
                                                     }
                                                 }
+
                                             }
-                                            Item{ height: 20 }
-                                            Item{
-                                                height: 20
-                                                width: left_column_ptz_title.width
-                                                Text{
-                                                    color: "#ffffffff"
-                                                    font.pixelSize: 12
-                                                    anchors.horizontalCenter: parent.horizontalCenter
-                                                    font.family: "Microsoft YaHei"
-                                                    text: "速度"
+                                            RowLayout{
+                                                id: focus_zoom_control_btn
+                                                width: parent.width
+                                                height: 30
+                                                //                                                    color: "red"
+                                                anchors.top: focus_zoom_control.bottom
+                                                anchors.left: parent.left
+                                                //                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                //                                                    anchors.topMargin: 15
+                                                Button{
+                                                    Layout.preferredWidth: 30
+                                                    Layout.preferredHeight: 30
+                                                    background: Rectangle{
+                                                        radius: 15 // 设置圆角大小
+                                                        color: parent.pressed ? "red" : "lightblue"
+                                                        border.color: "blue"
+                                                        border.width: 1
+                                                        anchors.fill: parent
+                                                    }
+                                                    text: "+"
+                                                }
+                                                Button{
+                                                    Layout.preferredWidth: 30
+                                                    Layout.preferredHeight: 30
+                                                    background: Rectangle{
+                                                        radius: 15 // 设置圆角大小
+                                                        color: parent.pressed ? "red" : "lightblue"
+                                                        border.color: "blue"
+                                                        border.width: 1
+                                                        anchors.fill: parent
+                                                    }
+                                                    text: "-"
+                                                }
+                                                Item{
+                                                    Layout.fillWidth: true
+                                                }
+                                                Button{
+                                                    Layout.preferredWidth: 30
+                                                    Layout.preferredHeight: 30
+                                                    background: Rectangle{
+                                                        radius: 15 // 设置圆角大小
+                                                        // color: "#42424e"
+                                                        border.color: "blue"
+                                                        border.width: 1
+                                                        anchors.fill: parent
+                                                    }
+                                                    text: "+"
+                                                    font.pixelSize: 16
+                                                }
+                                                Button{
+                                                    Layout.preferredWidth: 30
+                                                    Layout.preferredHeight: 30
+                                                    background: Rectangle{
+                                                        radius: 15 // 设置圆角大小
+                                                        color: parent.pressed ? "red" : "lightblue"
+                                                        border.color: "blue"
+                                                        border.width: 1
+                                                        anchors.fill: parent
+                                                    }
+                                                    text: "-"
                                                 }
                                             }
                                             //spin speed
                                             Rectangle{
+                                                id: spin_speed_control
+                                                anchors.top: focus_zoom_control_btn.bottom
+                                                anchors.left: parent.left
+                                                visible: true
                                                 width: left_column_ptz_title.width
                                                 height: 30
-                                                color: "#2c2a38"
-                                                // border.color: "#42424e"
+                                                color: "transparent"
+                                                //                                                 border.color: "#42424e"
                                                 // border.width: 2
-
-                                                radius: 5
-                                                Slider{
-                                                    anchors.centerIn: parent
-                                                    from: 1
-                                                    value: 25
-                                                    to: 100
+                                                Rectangle{
+                                                    id: spin_speed_txt
+                                                    anchors.top: parent.top
+                                                    anchors.left: parent.left
+                                                    height: 30
+                                                    width: left_column_ptz_title.width
+                                                    color: "transparent"
+                                                    Text{
+                                                        color: "#ffffffff"
+                                                        font.pixelSize: 12
+                                                        anchors.horizontalCenter: parent.horizontalCenter
+                                                        //                                                        anchors.verticalCenter: parent.verticalCenter
+                                                        font.family: "Microsoft YaHei"
+                                                        text: "速度"
+                                                    }
                                                 }
+                                                radius: 5
                                             }
-                                            Item{ height: 10 }
-                                            Item{
-                                                height: 20
-                                                width: left_column_ptz_title.width
+                                            Slider{
+                                                id: spin_speed_slider
+                                                width: parent.width/2
+                                                anchors.top: spin_speed_control.bottom
+                                                anchors.left: parent.left
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                from: 1
+                                                value: 25
+                                                to: 100
+                                            }
+                                            //                                            Item{ height: 10 }
+
+                                            //preserver position
+                                            Rectangle{
+                                                id: preserver_position_txt
+                                                anchors.top: spin_speed_slider.bottom
+                                                anchors.left: parent.left
+                                                visible: true
+                                                width: left_column_bottom.width
+                                                height: 30
+                                                color: "#2c2a38"
+//                                                Rectangle{
+//                                                    anchors.top: parent.top
+//                                                    anchors.left: parent.left
+//                                                    //                                                    id: preserver_position_txt
+//                                                    height: 30
+//                                                    width: left_column_ptz_title.width
+//
+//                                                }
                                                 Text{
                                                     color: "#ffffffff"
                                                     font.pixelSize: 12
@@ -408,67 +456,64 @@ ApplicationWindow{
                                                     font.family: "Microsoft YaHei"
                                                     text: "预置位"
                                                 }
+
                                             }
-                                            //preserver position
-                                            Rectangle{
-                                                anchors.left: left_ptz_control_arrow.left
-                                                anchors.bottom: left_ptz_control_arrow.bottom
-                                                width: left_column_bottom.width
-                                                height: 30
-                                                color: "#2c2a38"
-                                                RowLayout{
-                                                    anchors.centerIn: parent
-                                                    Button{
-                                                        Layout.preferredWidth: 30
-                                                        Layout.preferredHeight: 30
-                                                        background: Rectangle{
-                                                            radius: 15 // 设置圆角大小
-                                                            color: parent.pressed ? "red" : "lightblue"
-                                                            border.color: "blue"
-                                                            border.width: 1
-                                                            anchors.fill: parent
-                                                        }
-                                                        text: "1"
+                                            RowLayout{
+                                                visible: true
+                                                anchors.top: preserver_position_txt.bottom
+                                                anchors.left: parent.left
+                                                width: parent.width
+                                                Button{
+                                                    Layout.preferredWidth: 30
+                                                    Layout.preferredHeight: 30
+                                                    background: Rectangle{
+                                                        radius: 15 // 设置圆角大小
+                                                        color: parent.pressed ? "red" : "lightblue"
+                                                        border.color: "blue"
+                                                        border.width: 1
+                                                        anchors.fill: parent
                                                     }
-                                                    Button{
-                                                        Layout.preferredWidth: 30
-                                                        Layout.preferredHeight: 30
-                                                        background: Rectangle{
-                                                            radius: 15 // 设置圆角大小
-                                                            color: parent.pressed ? "red" : "lightblue"
-                                                            border.color: "blue"
-                                                            border.width: 1
-                                                            anchors.fill: parent
-                                                        }
-                                                        text: "2"
+                                                    text: "1"
+                                                }
+                                                Button{
+                                                    Layout.preferredWidth: 30
+                                                    Layout.preferredHeight: 30
+                                                    background: Rectangle{
+                                                        radius: 15 // 设置圆角大小
+                                                        color: parent.pressed ? "red" : "lightblue"
+                                                        border.color: "blue"
+                                                        border.width: 1
+                                                        anchors.fill: parent
                                                     }
-                                                    Button{
-                                                        Layout.preferredWidth: 30
-                                                        Layout.preferredHeight: 30
-                                                        background: Rectangle{
-                                                            radius: 15 // 设置圆角大小
-                                                            // color: "#42424e"
-                                                            border.color: "blue"
-                                                            border.width: 1
-                                                            anchors.fill: parent
-                                                        }
-                                                        text: "3"
-                                                        font.pixelSize: 16
+                                                    text: "2"
+                                                }
+                                                Button{
+                                                    Layout.preferredWidth: 30
+                                                    Layout.preferredHeight: 30
+                                                    background: Rectangle{
+                                                        radius: 15 // 设置圆角大小
+                                                        // color: "#42424e"
+                                                        border.color: "blue"
+                                                        border.width: 1
+                                                        anchors.fill: parent
                                                     }
-                                                    Button{
-                                                        Layout.preferredWidth: 30
-                                                        Layout.preferredHeight: 30
-                                                        background: Rectangle{
-                                                            radius: 15 // 设置圆角大小
-                                                            color: parent.pressed ? "red" : "lightblue"
-                                                            border.color: "blue"
-                                                            border.width: 1
-                                                            anchors.fill: parent
-                                                        }
-                                                        text: "4"
+                                                    text: "3"
+                                                    font.pixelSize: 16
+                                                }
+                                                Button{
+                                                    Layout.preferredWidth: 30
+                                                    Layout.preferredHeight: 30
+                                                    background: Rectangle{
+                                                        radius: 15 // 设置圆角大小
+                                                        color: parent.pressed ? "red" : "lightblue"
+                                                        border.color: "blue"
+                                                        border.width: 1
+                                                        anchors.fill: parent
                                                     }
+                                                    text: "4"
                                                 }
                                             }
+
                                         }
                                     }
                                 }
@@ -478,8 +523,10 @@ ApplicationWindow{
                             Rectangle{
                                 anchors.left: left_column.right
                                 anchors.top: left_column.top
+                                anchors.verticalCenter: parent.verticalCenter
                                 height: parent.height
                                 width: parent.width - 306
+                                //                                color: "#2c2a38"
                                 color: "#2c2a38"
                                 anchors.margins: 3
                                 // border.color: "#aaaaaf"
@@ -588,7 +635,7 @@ ApplicationWindow{
                         text: "西南服务器:"
                         color: "white"
                         font.pixelSize: 12
-//                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                        //                         Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                     }
                     Text{
                         text: "未连接..."
