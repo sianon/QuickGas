@@ -8,7 +8,8 @@ import Local 1.0
 Item{
     id: dialog
     anchors.fill: parent
-
+    property var global_pro: ""
+    property var url_rtsp: ""
     ColumnLayout{
         anchors.fill: parent
         anchors.margins: 1
@@ -36,21 +37,24 @@ Item{
             Layout.fillHeight: true
 
             FrameProvider{
-                id: provider
+                id: providers
             }
+//            Component.onCompleted:{
+//                global_pro = providers.moGetProvider();
+//            }
             VideoOutput{
                 id: video_outputs
                 anchors.fill: parent
-                source: provider
+                source: providers
             }
             Timer{
                 id: myTimer
-                interval: 1000 / 25
+                interval: 1000 /25
                 running: true
                 repeat: true
 
                 onTriggered:{
-                    provider.test();
+                    providers.mvRanderImage(url_rtsp);
                 }
             }
             Timer{
@@ -60,7 +64,7 @@ Item{
                 repeat: true
 
                 onTriggered:{
-                    if(!provider.mbIsNoSignal()) signal_status.text = ""; else signal_status.text = "无信号";
+                    if(!providers.mbIsNoSignal()) signal_status.text = ""; else signal_status.text = "无信号";
                 }
             }
             color: "#2c2a38"

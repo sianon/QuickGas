@@ -13,14 +13,14 @@ class FrameProvider : public QObject{
 Q_OBJECT
     Q_PROPERTY(QAbstractVideoSurface* videoSurface READ videoSurface WRITE setVideoSurface)
 public:
-    FrameProvider();
     ~FrameProvider();
-
+    explicit FrameProvider(QObject* parent = nullptr);
     QAbstractVideoSurface* videoSurface() const;
     void setVideoSurface(QAbstractVideoSurface* surface);
     void setFormat(int width, int heigth, QVideoFrame::PixelFormat format);
     Q_INVOKABLE bool mbIsNoSignal();
-    Q_INVOKABLE void test();
+    Q_INVOKABLE void tests();
+    Q_INVOKABLE void mvRanderImage(QString url);
 public slots:
     void onNewVideoContentReceived(const QVideoFrame& frame);
     void OnNoSignalTimeout();

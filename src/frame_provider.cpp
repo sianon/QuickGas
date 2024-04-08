@@ -14,8 +14,7 @@
 #include "video_dlg.h"
 #include "src/video_queue.h"
 
-FrameProvider::FrameProvider()
-: nosignal_count_(6){
+FrameProvider::FrameProvider(QObject* parent) : nosignal_count_(6){
     nosignal_timer_.setInterval(1000);
     connect(&nosignal_timer_, &QTimer::timeout, this, &FrameProvider::OnNoSignalTimeout);
 }
@@ -55,7 +54,7 @@ void FrameProvider::setFormat(int width, int heigth, QVideoFrame::PixelFormat fo
     }
 }
 
-void FrameProvider::test(){
+void FrameProvider::tests(){
     auto urls = VideoQueue::moGetInstance()->moGetAllRtspUrl();
     if(urls.empty()) return;
 
@@ -99,5 +98,25 @@ bool FrameProvider::mbIsNoSignal(){
 
 void FrameProvider::OnNoSignalTimeout(){
     nosignal_count_ > 0 ? nosignal_count_-- : nosignal_count_ = 0;
+}
+
+void FrameProvider::mvRanderImage(QString url){
+    if(url.isEmpty()) return;
+
+    QImage image = VideoQueue::moGetInstance()->moGetVideoFromQueue(url.toStdString());
+
+    if(image.isNull()){
+        qDebug() << "rtsp image is null\n";
+        return;
+    }
+
+    nosignal_count_ >= 6 ? nosignal_count_ = 6 : nosignal_count_++;
+
+    QVideoFrame video_frame(image);
+    auto cs = video_frame.pixelFormat();
+
+    setFormat(video_frame.width(), video_frame.height(), video_frame.pixelFormat());
+    if(m_surface)
+        m_surface->present(image);
 }
 

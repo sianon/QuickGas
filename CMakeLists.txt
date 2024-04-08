@@ -42,6 +42,8 @@ set(PROJECT_SOURCES
         src/video_queue.cpp
         src/video_queue.h
         src/circular_queue.hpp
+        src/frame_provider_ctrl.cpp
+        src/frame_provider_ctrl.h
 )
 
 

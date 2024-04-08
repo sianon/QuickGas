@@ -546,16 +546,12 @@ ApplicationWindow{
                                             color: "#42424e"
                                             radius: 5
                                             VideoFrameChild{
-                                                id: video_frame_child_1
-                                                //                            width: 320
-                                                //                            height: 240
+                                                url_rtsp: "rtsp://mobliestream.c3tv.com:554/live/goodtv.sdp"
                                             }
-
                                         }
                                     }
                                 }
                             }
-
                         }
                     }
                     Rectangle{
