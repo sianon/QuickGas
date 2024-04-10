@@ -8,25 +8,34 @@ import Local 1.0
 Item{
     id: dialog
     anchors.fill: parent
-    property var global_pro: ""
+    property var child_index: parent.index
     property var url_rtsp: ""
+    Component.onCompleted: {
+
+    }
+    FrameProvider{
+        id: providers
+    }
+    FrameProviderCtrl{
+        id: frameproviderctrl
+    }
     ColumnLayout{
         anchors.fill: parent
         anchors.margins: 1
         spacing: 0
         Rectangle{
             id: top_status
-            Layout.alignment: Qt.AlignRight
             Layout.preferredHeight: 23
             Layout.fillWidth: true
             color: "#42424e"
             radius: 6
             Label{
-                anchors.centerIn: parent
+                anchors.fill: parent
                 font.pixelSize: 16
                 rightPadding: 6
                 color: "#ffffffff"
-                text: "1920x1080   60fps"
+                horizontalAlignment: Text.AlignRight
+                text: "1920x1080 60fps"
             }
         }
         //video frame
@@ -36,12 +45,7 @@ Item{
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            FrameProvider{
-                id: providers
-            }
-//            Component.onCompleted:{
-//                global_pro = providers.moGetProvider();
-//            }
+
             VideoOutput{
                 id: video_outputs
                 anchors.fill: parent
@@ -49,7 +53,7 @@ Item{
             }
             Timer{
                 id: myTimer
-                interval: 1000 /25
+                interval: 1000 / 25
                 running: true
                 repeat: true
 
@@ -59,12 +63,14 @@ Item{
             }
             Timer{
                 id: signal_timer
-                interval: 1000
+                interval: 2000
                 running: true
                 repeat: true
 
                 onTriggered:{
                     if(!providers.mbIsNoSignal()) signal_status.text = ""; else signal_status.text = "无信号";
+                    url_rtsp = frameproviderctrl.mosGetRtspUrlByIndex(index);
+                    console.log("index:" + child_index + "--------" + url_rtsp);
                 }
             }
             color: "#2c2a38"

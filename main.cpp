@@ -10,9 +10,6 @@ int main(int argc, char* argv[]){
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
     QQmlContext* ctx = engine.rootContext();
-//    FrameProvider provider;
-//
-//    ctx->setContextProperty("_provider", &provider);
 
     qmlRegisterType<FrameProvider>("Local", 1, 0, "FrameProvider");
     qmlRegisterType<Producer>("pkg.producer", 1, 0, "Producers");

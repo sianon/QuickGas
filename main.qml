@@ -6,7 +6,7 @@ import QtQuick.Layouts 1.15
 import QtQuick.Controls.Material 2.12
 import "."
 import QtMultimedia 5.15
-
+import Local 1.0
 //import pkg.custom_video_surface 1.0
 
 ApplicationWindow{
@@ -538,6 +538,7 @@ ApplicationWindow{
                                     width: parent.width
                                     anchors.fill: parent
                                     anchors.margins: 3
+
                                     Repeater{
                                         model: 16 // 创建 16 个子项
                                         Rectangle{
@@ -546,7 +547,7 @@ ApplicationWindow{
                                             color: "#42424e"
                                             radius: 5
                                             VideoFrameChild{
-                                                url_rtsp: "rtsp://mobliestream.c3tv.com:554/live/goodtv.sdp"
+                                                child_index: index
                                             }
                                         }
                                     }

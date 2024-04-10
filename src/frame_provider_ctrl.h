@@ -30,7 +30,7 @@ public:
         return provider_;
     }
 
-    Q_INVOKABLE QStringList mobGetAllRtspUrl(){
+    Q_INVOKABLE QStringList molGetAllRtspUrl(){
         std::list<std::string> tmp = VideoQueue::moGetInstance()->moGetAllRtspUrl();
         QStringList res;
         for(auto& i: tmp){
@@ -39,6 +39,20 @@ public:
         }
 
         return res;
+    }
+
+    Q_INVOKABLE QString mosGetRtspUrlByIndex(unsigned int index){
+        std::list<std::string> tmp = VideoQueue::moGetInstance()->moGetAllRtspUrl();
+        QStringList res;
+        for(auto& i: tmp){
+            QString tmp = QString::fromStdString(i);
+            res.push_back(tmp);
+        }
+        auto tmps = res.size();
+        if(index >= res.size())
+            return "";
+        else
+            return res[index];
     }
 
 private:
