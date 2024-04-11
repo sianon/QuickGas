@@ -4,10 +4,9 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 import QtQuick.Controls.Material 2.12
-import "."
 import QtMultimedia 5.15
 import Local 1.0
-//import pkg.custom_video_surface 1.0
+import "./custom_qml"
 
 ApplicationWindow{
     id: mainWindow
@@ -17,9 +16,9 @@ ApplicationWindow{
     height: 720
     title: "气体泄漏检测系统"
     color: "#42424e"
+
     // flags: Qt.FramelessWindowHint
 
-    //QML中的方法可以被cpp调用，也可以作为槽函数
     function qml_method(val_arg){
         cpp_obj.onTestSlot(1, 2)
         console.log("qml method runing", val_arg, "return ok")
@@ -42,7 +41,6 @@ ApplicationWindow{
         bottomPadding: 1
         background: Rectangle{
             color: "#42424e"
-            // border.color: "#c94f4f"
         }
 
         ColumnLayout{
@@ -257,7 +255,6 @@ ApplicationWindow{
                                                 anchors.horizontalCenter: parent.horizontalCenter
                                                 text: "云台控制"
                                             }
-
                                         }
                                         Rectangle{
                                             visible: true
@@ -266,12 +263,10 @@ ApplicationWindow{
                                             anchors.top: left_column_ptz_title.bottom
                                             width: parent.width
                                             color: "#2c2a38"
-//                                            border.color: "red"
                                             //ptz arrow
                                             Rectangle{
                                                 id: ptz_control_arrow
                                                 color: "#2c2a38"
-//                                                border.color: "red"
                                                 width: 180
                                                 height: 180
                                                 anchors.horizontalCenter: parent.horizontalCenter
@@ -298,8 +293,6 @@ ApplicationWindow{
                                                 }
                                             }
                                             //ptz focus zoom
-                                            //                                            Item{ height: 20 }
-
                                             Rectangle{
                                                 visible: true
                                                 id: focus_zoom_control
@@ -422,7 +415,7 @@ ApplicationWindow{
                                             }
                                             Slider{
                                                 id: spin_speed_slider
-                                                width: parent.width/2
+                                                width: parent.width / 2
                                                 anchors.top: spin_speed_control.bottom
                                                 anchors.left: parent.left
                                                 anchors.horizontalCenter: parent.horizontalCenter
@@ -441,14 +434,14 @@ ApplicationWindow{
                                                 width: left_column_bottom.width
                                                 height: 30
                                                 color: "#2c2a38"
-//                                                Rectangle{
-//                                                    anchors.top: parent.top
-//                                                    anchors.left: parent.left
-//                                                    //                                                    id: preserver_position_txt
-//                                                    height: 30
-//                                                    width: left_column_ptz_title.width
-//
-//                                                }
+                                                //                                                Rectangle{
+                                                //                                                    anchors.top: parent.top
+                                                //                                                    anchors.left: parent.left
+                                                //                                                    //                                                    id: preserver_position_txt
+                                                //                                                    height: 30
+                                                //                                                    width: left_column_ptz_title.width
+                                                //
+                                                //                                                }
                                                 Text{
                                                     color: "#ffffffff"
                                                     font.pixelSize: 12
@@ -562,11 +555,7 @@ ApplicationWindow{
                         }
                     }
 
-                    Rectangle{
-                        color: "lightcoral"
-                        Text{
-                            text: "Content for Tab 3"
-                        }
+                    QuantitativeAnalysis{
                     }
                     Rectangle{
                         color: "lightcoral"

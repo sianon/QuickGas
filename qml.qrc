@@ -18,5 +18,6 @@
         <file>iso_dlg.qml</file>
         <file>param_dlg.qml</file>
         <file>VideoFrameChild.qml</file>
+        <file>custom_qml/QuantitativeAnalysis.qml</file>
     </qresource>
 </RCC>
