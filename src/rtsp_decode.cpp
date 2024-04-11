@@ -37,11 +37,9 @@ GstFlowReturn CaptureGstBGRBuffer(GstAppSink* sink, gpointer user_data){
     GstStructure* structure = gst_caps_get_structure(caps, 0);
     gst_structure_get_int(structure, "width", &width);
     gst_structure_get_int(structure, "height", &height);
-    const gchar* color_space = gst_structure_get_string(structure, "format");
-//    g_print("Color space: %s\n", color_space);
     QImage image(map_info.data, width, height, QImage::Format_RGBA8888);
 
-    VideoQueue::moGetInstance()->mvPushVideo2Queue(uri, image);
+    VideoQueue::moGetInstance()->mvPushVideo2Queue(uri, image.rgbSwapped());
 
     gst_buffer_unmap((buffer), &map_info);
     gst_sample_unref(sample);
