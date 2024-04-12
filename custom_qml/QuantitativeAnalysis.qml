@@ -24,32 +24,48 @@ Rectangle{
     Component.onCompleted:{
 
     }
-        FrameProvider{
-            id: providers
-        }
-        FrameProviderCtrl{
-            id: frameproviderctrl
-        }
+    FrameProvider{
+        id: providers
+    }
+    FrameProviderCtrl{
+        id: frameproviderctrl
+    }
     RowLayout{
         anchors.fill: parent
         ColumnLayout{
+            Rectangle{
+                anchors.fill: parent
+                color: "#2c2a38"
+                radius: 6
+            }
             Layout.fillHeight: true
             Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop
+            Layout.preferredHeight: parent.height
 
-            Text {
-                color: "#ffffffff"
-                width: parent.width
-                font.pixelSize: 16
-                font.family: "Microsoft YaHei"
-                text: "设备列表"
-                Layout.alignment: Qt.AlignHCenter
+            Rectangle{
+                Layout.alignment: Qt.AlignTop
+                Layout.preferredHeight: 38
+                Layout.fillWidth: true
+                height: 38
+                color: "#42424e"
+                border.color: "#2c2a38"
+                border.width: 2
+                radius: 5
+                Text{
+                    color: "#ffffffff"
+                    font.pixelSize: 16
+                    font.family: "Microsoft YaHei"
+                    anchors.centerIn: parent
+                    text: "设备列表"
+                }
             }
+
             ListView{
                 visible: true
                 Layout.fillWidth: true
-                Layout.preferredHeight: parent.height / 2
+                Layout.preferredHeight: parent.height / 3
                 model: ["G800-机位1", "G800-机位2", "G900-机位23", "机位25", "机位27"]
+
                 delegate: Text{
                     text: modelData
                     font.pixelSize: 14
@@ -61,16 +77,26 @@ Rectangle{
                 id: left_column_bottom
                 visible: true
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignHCenter
-                Text{
-                    color: "#ffffffff"
-                    font.pixelSize: 16
-                    font.family: "Microsoft YaHei"
-                    width: parent.width
-                    Layout.alignment: Qt.AlignHCenter
-                    text: "云台控制"
+                Layout.alignment: Qt.AlignTop
+                Rectangle{
+                    Layout.alignment: Qt.AlignTop
+                    Layout.preferredHeight: 38
+                    Layout.fillWidth: true
+                    height: 38
+                    color: "#42424e"
+                    border.color: "#2c2a38"
+                    border.width: 2
+                    radius: 5
+                    Text{
+                        color: "#ffffffff"
+                        font.pixelSize: 16
+                        font.family: "Microsoft YaHei"
+                        anchors.centerIn: parent
+                        text: "云台控制"
+                    }
                 }
                 GridLayout{
+                    Layout.fillWidth: true
                     anchors.margins: 8
                     Layout.alignment: Qt.AlignHCenter
                     rows: 3
@@ -78,8 +104,10 @@ Rectangle{
                     Repeater{
                         model: 9 // 创建 9 个子项
                         Button{
-                            Layout.preferredWidth: parent.width / 3 - 4
-                            Layout.preferredHeight: parent.height / 3 - 4
+                            //                            Layout.preferredWidth: parent.width / 3 - 4
+                            //                            Layout.preferredHeight: parent.height / 3 - 4
+                            Layout.preferredWidth: 50
+                            Layout.preferredHeight: 50
                             background: Rectangle{
                                 anchors.fill: parent
                                 radius: 15
@@ -233,6 +261,7 @@ Rectangle{
             Layout.fillHeight: true
             Layout.preferredWidth: parent.width * 0.6
             spacing: 0
+
             Rectangle{
                 id: top_status
                 Layout.preferredHeight: 23
@@ -359,23 +388,32 @@ Rectangle{
         ColumnLayout{
             Layout.fillHeight: true
             Layout.fillWidth: true
+            Layout.preferredHeight: parent.height
             Layout.alignment: Qt.AlignTop
-
-            Text {
-                color: "#ffffffff"
-                width: parent.width
-                font.pixelSize: 16
-                font.family: "Microsoft YaHei"
-                text: "测量信息"
-                Layout.alignment: Qt.AlignHCenter
+            Rectangle{
+                anchors.fill: parent
+                color: "#2c2a38"
+                radius: 6
             }
-            Rectangle {
-                color: "#090c10"
-                width: parent.width
-                height: 200
-                Layout.alignment: Qt.AlignHCenter
+            Rectangle{
+                Layout.alignment: Qt.AlignTop
+                Layout.preferredHeight: 38
+                Layout.fillWidth: true
+                height: 38
+                color: "#42424e"
+                border.color: "#2c2a38"
+                border.width: 2
+                radius: 5
+                Text{
+                    color: "#ffffffff"
+                    font.pixelSize: 16
+                    font.family: "Microsoft YaHei"
+                    anchors.centerIn: parent
+                    text: "测量信息"
+                }
             }
             GridLayout{
+                Layout.alignment: Qt.AlignTop
                 rows: 3
                 columns: 2
                 Text{
@@ -383,7 +421,7 @@ Rectangle{
                     font.pixelSize: 16
                     font.family: "Microsoft YaHei"
                     width: parent.width
-//                    Layout.alignment: Qt.AlignHCenter
+                    //                    Layout.alignment: Qt.AlignHCenter
                     text: "泄漏量:" + total_leak
                 }
                 Text{
@@ -433,14 +471,31 @@ Rectangle{
                 visible: true
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignHCenter
-                Text{
-                    color: "#ffffffff"
-                    font.pixelSize: 16
-                    font.family: "Microsoft YaHei"
-                    width: parent.width
+                Rectangle{
                     Layout.alignment: Qt.AlignHCenter
-                    text: "测量设置"
+                    Layout.preferredHeight: 38
+                    Layout.fillWidth: true
+                    height: 38
+                    color: "#42424e"
+                    border.color: "#2c2a38"
+                    border.width: 2
+                    radius: 5
+                    Text{
+                        color: "#ffffffff"
+                        font.pixelSize: 16
+                        font.family: "Microsoft YaHei"
+                        anchors.centerIn: parent
+                        text: "测量设置"
+                    }
                 }
+                //                Text{
+                //                    color: "#ffffffff"
+                //                    font.pixelSize: 16
+                //                    font.family: "Microsoft YaHei"
+                //                    width: parent.width
+                //                    Layout.alignment: Qt.AlignHCenter
+                //                    text: "测量设置"
+                //                }
                 Switch{
                     font.pixelSize: 12
                     font.family: "Microsoft YaHei"
